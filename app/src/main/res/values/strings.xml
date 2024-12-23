@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">SEDM Dictionary</string>
+    <string name="input">Input Word</string>
+    <string name="word">Word</string>
+    <string name="meaning">Meaning</string>
+    <string name="search">Search</string>
+    <string name="add">Add</string>
+    <string name="input_error_title">Error</string>
+    <string name="ok">Ok</string>
+    <string name="back">Back</string>
+    <string name="wrong_word">Wrong word</string>
+    <string name="word_added">Word added</string>
+    <string name="badInput">Bad Input</string>
+    <string name="wordNotFound">Word Not Found</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="add_word">Add word</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+</resources>

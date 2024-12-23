@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Diccionario SEDM</string>
+    <string name="input">Introduce una palabra</string>
+    <string name="word">Palabra</string>
+    <string name="meaning">Significado</string>
+    <string name="search">Buscar</string>
+    <string name="add">Anyadir</string>
+    <string name="badInput">Palabra errónea</string>
+    <string name="wordNotFound">Palabra no encontrada</string>
+    <string name="word_added">Palabra añadida</string>
+    <string name="input_error_title">Error</string>
+    <string name="wrong_word">Palabra no válida</string>
+    <string name="ok">Ok</string>
+    <string name="back">Atrás</string>
+    <string name="first_fragment_label">Primer Fragmento</string>
+    <string name="add_word">Anyadir word</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Atras</string>
+</resources>
