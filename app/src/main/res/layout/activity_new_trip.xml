@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main">
+
+  <!-- AppBarLayout -->
+  <com.google.android.material.appbar.AppBarLayout
+      android:id="@+id/appbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar">
+
+    <!-- CollapsingToolbarLayout -->
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:id="@+id/collapsing_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:contentScrim="?attr/colorPrimary">
+
+      <!-- Toolbar -->
+      <com.google.android.material.appbar.MaterialToolbar
+          android:id="@+id/toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          app:navigationIcon="@drawable/ic_arrow_back"
+          app:title="New Trip"
+          app:titleTextColor="@android:color/white"
+          app:layout_collapseMode="pin" />
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <!-- Main content -->
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/main_content"
+      android:layout_width="match_parent"
+      android:layout_height="675dp"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <!-- TextInput for trip name -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/trip_name_input_layout"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="Trip name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMarginEnd="16dp"
+        app:layout_constraintMarginStart="16dp"
+        app:layout_constraintMarginTop="24dp"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+      <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/trip_name_input"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="Enter trip name"
+          android:singleLine="true"
+          android:text="Trip2" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Cancel Button -->
+
+    <!-- Save Button -->
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="Cancel"
+        app:icon="@drawable/ic_cancel"
+        app:iconGravity="start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintMarginBottom="24dp"
+        app:layout_constraintMarginStart="24dp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="Save"
+        app:icon="@drawable/ic_save"
+        app:iconGravity="start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMarginBottom="24dp"
+        app:layout_constraintMarginEnd="24dp" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
