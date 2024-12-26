@@ -22,4 +22,6 @@ public class Dictionary {
         DictDbHelper dbHelper = new DictDbHelper(context, tables);
         this.db = dbHelper.getWritableDatabase();
     }
+
+    // TODO: add operations methods from operations package
 }
