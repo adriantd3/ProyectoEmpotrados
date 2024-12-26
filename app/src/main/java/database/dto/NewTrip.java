@@ -1,4 +1,4 @@
-package database.entities;
+package database.dto;
 
 import java.sql.Date;
 
