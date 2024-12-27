@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import weatherapp.ui.NewDestiny;
+import weatherapp.ui.NewTrip;
 
 
 public class MainActivity extends AppCompatActivity {

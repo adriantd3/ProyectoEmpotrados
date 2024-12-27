@@ -16,42 +16,12 @@
       app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <!-- TextInput for trip name -->
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
-        app:layout_constraintBottom_toTopOf="@+id/trip_name_input_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-      <!-- CollapsingToolbarLayout -->
-      <com.google.android.material.appbar.CollapsingToolbarLayout
-          android:id="@+id/collapsing_toolbar"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:fitsSystemWindows="true"
-          app:contentScrim="?attr/colorPrimary"
-          app:layout_scrollFlags="scroll|enterAlways">
-
-        <!-- Toolbar -->
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin"
-            app:title="New Trip"
-            app:titleTextColor="@android:color/white" />
-      </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/trip_name_input_layout"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:hint="Trip name"
+        android:hint="@string/trip_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,9 +32,8 @@
           android:id="@+id/trip_name_input"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="Enter trip name"
-          android:singleLine="true"
-          android:text="Trip2" />
+          android:hint="@string/enter_trip_name"
+          android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Cancel Button -->
@@ -77,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="24dp"
-        android:text="Cancel"
+        android:text="@string/cancel"
         app:iconGravity="start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -88,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:text="Save"
+        android:text="@string/save"
         app:iconGravity="start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

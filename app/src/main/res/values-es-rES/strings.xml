@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Diccionario SEDM</string>
+    <string name="app_name">(Aplicacion Tiempo)</string>
     <string name="input">Introduce una palabra</string>
     <string name="word">Palabra</string>
     <string name="meaning">Significado</string>
@@ -17,4 +17,28 @@
     <string name="add_word">Anyadir word</string>
     <string name="next">Siguiente</string>
     <string name="previous">Atras</string>
+
+    <!-- Strings for general uses -->
+    <string name="cancel">Cancelar</string>
+    <string name="save">Guardar</string>
+
+    <!-- Strings used for fragments for HomePage -->
+    <string name="home_page_header">Mis viajes planificados</string>
+    <string name="new_trip_button">Crear un nuevo viaje</string>
+
+    <!-- Strings used for fragments for NewTrip -->
+    <string name="new_trip_activity_name">Crear un nuevo viaje</string>
+    <string name="trip_name">Nombre del viaje</string>
+    <string name="enter_trip_name">Introduce el nombre del viaje</string>
+    <string name="trip_name_error">El nombre del viaje es obligatorio</string>
+
+    <!-- Strings used for fragments for NewDestiny -->
+    <string name="new_destiny_activity_name">Crear un nuevo destino</string>
+    <string name="destiny_label">Destino</string>
+    <string name="destiny_placeholder">Introduce el destino</string>
+    <string name="destiny_error">El destino es obligatorio</string>
+
+    <string name="arrival_date_label">Fecha de llegada</string>
+    <string name="departure_date_label">Fecha de salida</string>
+    <string name="date_error">Fecha inválida</string>
 </resources>

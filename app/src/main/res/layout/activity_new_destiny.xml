@@ -32,10 +32,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Destiny"
+            android:layout_marginBottom="8dp"
+            android:text="@string/destiny_label"
             android:textColor="@android:color/darker_gray"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
+            android:textSize="16sp" />
 
         <!-- Destiny Input Field -->
         <EditText
@@ -139,20 +139,20 @@
             android:id="@+id/btnCancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:backgroundTint="@android:color/darker_gray"
-            android:text="Cancel"
-            android:textColor="@android:color/white"
-            android:layout_marginEnd="8dp" />
+            android:text="@string/cancel"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/btnSave"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:backgroundTint="@color/purple_500"
-            android:text="Save"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="8dp" />
+            android:text="@string/save"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </RelativeLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SEDM Dictionary</string>
+    <string name="app_name">(Weather App)</string>
     <string name="input">Input Word</string>
     <string name="word">Word</string>
     <string name="meaning">Meaning</string>
@@ -17,5 +17,32 @@
     <string name="add_word">Add word</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+
+    <!-- Strings for general uses -->
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+
+    <!-- Strings used for fragments for HomePage -->
+    <string name="home_page_header">My planned trips</string>
+    <string name="new_trip_button">Create a new trip</string>
+
+    <!-- Strings used for fragments for NewTrip -->
+    <string name="new_trip_activity_name">Create a new trip</string>
+    <string name="trip_name">Trip name</string>
+    <string name="enter_trip_name">Enter trip name</string>
+    <string name="trip_name_error">Trip name is required</string>
+
+
+    <!-- Strings used for fragments for NewDestiny -->
+    <string name="new_destiny_activity_name">Create a new destiny</string>
+    <string name="destiny_label">Destiny</string>
+    <string name="destiny_placeholder">Enter destiny </string>
+    <string name="destiny_error">Destiny is required</string>
+
+    <string name="arrival_date_label">Arrival date</string>
+    <string name="departure_date_label">Departure date</string>
+    <string name="date_error">Invalid date</string>
+
+
 
 </resources>
