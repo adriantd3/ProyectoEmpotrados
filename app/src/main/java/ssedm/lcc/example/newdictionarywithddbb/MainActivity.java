@@ -20,7 +20,7 @@ import weatherapp.ui.NewTrip;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String DATABASE_NAME = "agendaDB.db";
+    public static final String DATABASE_NAME = "weatherDB.db";
     public static final String SHARED_AGENDA = "SHARED_AGENDA";
 
     // Resto de atributos

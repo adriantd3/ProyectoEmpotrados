@@ -18,9 +18,8 @@ public class DateInfoTable implements InterfaceTable {
                 COLUMN_NAME_DESTINY_ID + " INTEGER," +
                 COLUMN_NAME_DATE + " DATE," +
                 COLUMN_NAME_TMP + " REAL," +
-                COLUMN_NAME_WEATHER_CODE + " INTEGER" +
-                " ) " +
-                "FOREIGN KEY(" + COLUMN_NAME_DESTINY_ID + ") REFERENCES " + DestinyTable.TABLE_NAME + "(" + DestinyTable.COLUMN_NAME_ID + ") ON DELETE CASCADE ON UPDATE CASCADE";
+                COLUMN_NAME_WEATHER_CODE + " INTEGER, " +
+                "FOREIGN KEY(" + COLUMN_NAME_DESTINY_ID + ") REFERENCES " + DestinyTable.TABLE_NAME + "(" + DestinyTable.COLUMN_NAME_ID + ") ON DELETE CASCADE ON UPDATE CASCADE)";
     }
 
     @Override

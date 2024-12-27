@@ -18,7 +18,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import database.dto.NewTrip;
+import database.dto.NewTripDTO;
 import database.entities.TripEntity;
 
 public class TripOperations {
@@ -58,7 +58,7 @@ public class TripOperations {
         return entities;
     }
 
-    public void insertTrip(SQLiteDatabase db, NewTrip trip) {
+    public void insertTrip(SQLiteDatabase db, NewTripDTO trip) {
         db.insert(TABLE_NAME, null, mapEntityToContentValues(trip));
     }
 
@@ -92,11 +92,9 @@ public class TripOperations {
         return values;
     }
 
-    private ContentValues mapEntityToContentValues(NewTrip trip) {
+    private ContentValues mapEntityToContentValues(NewTripDTO trip) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_NAME, trip.getName());
-        values.put(COLUMN_NAME_INIT_DATE, trip.getInitDate().toString());
-        values.put(COLUMN_NAME_END_DATE, trip.getEndDate().toString());
         values.put(COLUMN_NAME_NDESTINIES, 0);
         return values;
     }

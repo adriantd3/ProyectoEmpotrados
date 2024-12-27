@@ -6,14 +6,22 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import database.Dictionary;
+import ssedm.lcc.example.newdictionarywithddbb.MainActivity;
 import ssedm.lcc.example.newdictionarywithddbb.R;
+import ssedm.lcc.example.newdictionarywithddbb.SingletonMap;
 
 public class HomePage extends AppCompatActivity {
+    public static final String SHARED_AGENDA = "SHARED_AGENDA";
+
+    private Dictionary dict;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        initDictionary();
     }
 
     public void onClick(View view) {
@@ -32,9 +40,17 @@ public class HomePage extends AppCompatActivity {
         startActivity(it);
     }
 
-    // Temporary method
+    // Temporary redirect to NewDestiny
     private void redirectToNewDestiny() {
         Intent it = new Intent(this, NewDestiny.class);
         startActivity(it);
+    }
+
+    private void initDictionary() {
+        dict = (Dictionary) SingletonMap.getInstance().get(MainActivity.SHARED_AGENDA);
+        if(dict == null) {
+            dict = new Dictionary(getApplicationContext());
+            SingletonMap.getInstance().put(HomePage.SHARED_AGENDA, dict);
+        }
     }
 }
