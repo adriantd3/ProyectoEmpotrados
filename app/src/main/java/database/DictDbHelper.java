@@ -32,4 +32,5 @@ public class DictDbHelper extends SQLiteOpenHelper {
         }
         onCreate(db);
     }
+
 }

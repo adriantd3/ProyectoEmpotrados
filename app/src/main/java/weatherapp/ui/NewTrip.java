@@ -9,12 +9,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import database.Dictionary;
+import database.dto.NewTripDTO;
 import ssedm.lcc.example.newdictionarywithddbb.MainActivity;
 import ssedm.lcc.example.newdictionarywithddbb.R;
+import ssedm.lcc.example.newdictionarywithddbb.SingletonMap;
 
 public class NewTrip extends AppCompatActivity {
 
     //ADD DATABASE CONNECTION
+    Dictionary dict;
 
     TextInputEditText tripName;
 
@@ -24,6 +28,7 @@ public class NewTrip extends AppCompatActivity {
         setContentView(R.layout.activity_new_trip);
 
         tripName = findViewById(R.id.trip_name_input);
+        initDictionary();
 
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,6 +59,17 @@ public class NewTrip extends AppCompatActivity {
     }
 
     private void createTrip() {
-        // TO DO
+        String name = tripName.getText().toString();
+        dict.insertTrip(new NewTripDTO(name));
+
+        finish();
+    }
+
+    private void initDictionary() {
+        dict = (Dictionary) SingletonMap.getInstance().get(MainActivity.SHARED_AGENDA);
+        if(dict == null) {
+            dict = new Dictionary(getApplicationContext());
+            SingletonMap.getInstance().put(HomePage.SHARED_AGENDA, dict);
+        }
     }
 }

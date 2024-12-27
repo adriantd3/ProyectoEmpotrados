@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import api.nominatim.GeocodingResponse;
-import database.dto.NewDestiny;
-import database.dto.NewTrip;
+import database.dto.NewDestinyDTO;
+import database.dto.NewTripDTO;
 import database.operations.DateInfoOperations;
 import database.operations.DestinyOperations;
 import database.operations.TripOperations;
@@ -25,7 +25,7 @@ public class Dictionary {
     private DestinyOperations destinyOperations;
     private DateInfoOperations dateInfoOperations;
 
-    public Dictionary(Context context, String dbName) {
+    public Dictionary(Context context) {
         List<InterfaceTable> tables = new ArrayList<>();
         tables.add(new TripTable());
         tables.add(new DestinyTable());
@@ -46,7 +46,8 @@ public class Dictionary {
     public List<TripEntity> getAllTrips() {
         return tripOperations.getAllTrips(db);
     }
-    public void insertTrip(NewTrip trip) {
+
+    public void insertTrip(NewTripDTO trip) {
         tripOperations.insertTrip(db, trip);
     }
 
@@ -62,11 +63,12 @@ public class Dictionary {
     public List<DestinyEntity> getAllByTripId(Integer tripId) {
         return destinyOperations.getAllByTripId(db, tripId);
     }
+
     public DestinyEntity getDestinyById(Integer id) {
         return destinyOperations.getDestinyById(db, id);
     }
 
-    public void insertDestiny(NewDestiny destiny, GeocodingResponse response) {
+    public void insertDestiny(NewDestinyDTO destiny, GeocodingResponse response) {
         destinyOperations.insertDestiny(db, destiny, response);
     }
 
@@ -86,6 +88,7 @@ public class Dictionary {
     public DateInfoEntity getDateInfoById(Integer id) {
         return dateInfoOperations.getDateInfoById(db, id);
     }
+
     public void insertDateInfo(DateInfoEntity dateInfo) {
         dateInfoOperations.insertDateInfo(db, dateInfo);
     }

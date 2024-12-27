@@ -20,7 +20,7 @@ import java.util.List;
 
 import api.nominatim.GeocodingResponse;
 import database.entities.DestinyEntity;
-import database.dto.NewDestiny;
+import database.dto.NewDestinyDTO;
 
 public class DestinyOperations {
     public List<DestinyEntity> getAllByTripId(SQLiteDatabase db, Integer tripId) {
@@ -59,8 +59,8 @@ public class DestinyOperations {
         return entity;
     }
 
-    public void insertDestiny(SQLiteDatabase db, NewDestiny newDestiny, GeocodingResponse response) {
-        db.insert(TABLE_NAME, null, mapEntitiesToContentValues(newDestiny, response));
+    public void insertDestiny(SQLiteDatabase db, NewDestinyDTO newDestinyDTO, GeocodingResponse response) {
+        db.insert(TABLE_NAME, null, mapEntitiesToContentValues(newDestinyDTO, response));
     }
 
     public void updateDestiny(SQLiteDatabase db, DestinyEntity destiny, GeocodingResponse geocoding) {
@@ -98,7 +98,7 @@ public class DestinyOperations {
         return values;
     }
 
-    private ContentValues mapEntitiesToContentValues(NewDestiny destiny, GeocodingResponse geocoding) {
+    private ContentValues mapEntitiesToContentValues(NewDestinyDTO destiny, GeocodingResponse geocoding) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_NAME, destiny.getName());
         values.put(COLUMN_NAME_LAT, geocoding.getLat());

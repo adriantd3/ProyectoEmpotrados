@@ -21,9 +21,8 @@ public class DestinyTable implements InterfaceTable {
                 COLUMN_NAME_LAT + " REAL," +
                 COLUMN_NAME_LON + " REAL," +
                 COLUMN_NAME_ARRIVAL_DATE + " DATE," +
-                COLUMN_NAME_DEPARTURE_DATE + " DATE" +
-                " ) " +
-                "FOREIGN KEY(" + COLUMN_NAME_TRIP_ID + ") REFERENCES " + TripTable.TABLE_NAME + "(" + TripTable.COLUMN_NAME_ID + ") ON DELETE CASCADE ON UPDATE CASCADE";
+                COLUMN_NAME_DEPARTURE_DATE + " DATE,  " +
+                "FOREIGN KEY(" + COLUMN_NAME_TRIP_ID + ") REFERENCES " + TripTable.TABLE_NAME + "(" + TripTable.COLUMN_NAME_ID + ") ON DELETE CASCADE ON UPDATE CASCADE)";
     }
 
     @Override
