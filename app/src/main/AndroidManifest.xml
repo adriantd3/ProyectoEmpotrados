@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -13,23 +12,27 @@
         android:theme="@style/Theme.NewDictionaryWithDDBB"
         tools:targetApi="34">
         <activity
+            android:name="weatherapp.ui.HomePage"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="weatherapp.ui.NewDestiny"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/new_destiny_activity_name" />
         <activity
             android:name="weatherapp.ui.NewTrip"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/new_trip_activity_name" />
         <activity
             android:name=".AddContactActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
