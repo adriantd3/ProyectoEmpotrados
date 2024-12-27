@@ -1,10 +1,9 @@
-package api.dto;
+package api.nominatim;
 
 import lombok.Data;
 
 @Data
 public class GeocodingResponse {
-    private String direction;
     private Float lat;
     private Float lon;
 }

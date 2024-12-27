@@ -18,7 +18,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import api.dto.GeocodingResponse;
+import api.nominatim.GeocodingResponse;
 import database.entities.DestinyEntity;
 import database.dto.NewDestiny;
 
@@ -90,7 +90,7 @@ public class DestinyOperations {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_ID, destiny.getId());
         values.put(COLUMN_NAME_TRIP_ID, destiny.getTripId());
-        values.put(COLUMN_NAME_NAME, geocoding == null ? destiny.getName() : geocoding.getDirection());
+        values.put(COLUMN_NAME_NAME, destiny.getName());
         values.put(COLUMN_NAME_LAT, geocoding == null ? destiny.getLat() : geocoding.getLat());
         values.put(COLUMN_NAME_LON, geocoding == null ? destiny.getLon() : geocoding.getLon());
         values.put(COLUMN_NAME_ARRIVAL_DATE, destiny.getArrivalDate().toString());
@@ -100,7 +100,7 @@ public class DestinyOperations {
 
     private ContentValues mapEntitiesToContentValues(NewDestiny destiny, GeocodingResponse geocoding) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME_NAME, geocoding.getDirection());
+        values.put(COLUMN_NAME_NAME, destiny.getName());
         values.put(COLUMN_NAME_LAT, geocoding.getLat());
         values.put(COLUMN_NAME_LON, geocoding.getLon());
         values.put(COLUMN_NAME_ARRIVAL_DATE, destiny.getArrivalDate().toString());
