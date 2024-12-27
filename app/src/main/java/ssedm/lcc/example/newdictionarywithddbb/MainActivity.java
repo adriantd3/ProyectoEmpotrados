@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import weatherapp.ui.NewDestiny;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private Dictionary dictionary;
 
 
+
+
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button: search_word(); break;
@@ -35,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void redirect(){
-        Intent it = new Intent(this, AddContactActivity.class);
+        //Intent it = new Intent(this, AddContactActivity.class);
+        Intent it = new Intent(this, NewDestiny.class);
         startActivity(it);
     }
 
