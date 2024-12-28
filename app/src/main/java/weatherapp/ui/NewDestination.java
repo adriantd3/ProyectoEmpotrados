@@ -2,6 +2,7 @@ package weatherapp.ui;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -10,11 +11,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import api.tomorrowio.TomorrowioService;
 import api.tomorrowio.response.TomorrowResponse;
 import ssedm.lcc.example.newdictionarywithddbb.R;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.sql.Date;
 import java.util.List;
 
 import api.nominatim.GeocodingResponse;
@@ -40,6 +44,7 @@ public class NewDestination extends AppCompatActivity {
 
     private Dictionary dictionary;
     private NominatimService nominatimService;
+    private TomorrowioService tomorrowioService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,7 @@ public class NewDestination extends AppCompatActivity {
 
         dictionary = new Dictionary(this);
         nominatimService = new NominatimService();
+        tomorrowioService = new TomorrowioService();
 
         btnClearDestination.setOnClickListener(v -> editTextDestination.setText(""));
 
@@ -74,7 +80,6 @@ public class NewDestination extends AppCompatActivity {
             if (destination.isEmpty()) {
                 Toast.makeText(NewDestination.this, "Please enter a destination.", Toast.LENGTH_SHORT).show();
             } else {
-
                 nominatimService.getCoordinates(destination, new Callback<List<GeocodingResponse>>() {
                     @Override
                     public void onResponse(Call<List<GeocodingResponse>> call, Response<List<GeocodingResponse>> response) {
@@ -87,12 +92,33 @@ public class NewDestination extends AppCompatActivity {
                             newDestiny.setDepartureDate(departureDate);
                             newDestiny.setTripId(1);
 
-                            TomorrowResponse tomorrowResponse = new TomorrowResponse();
+                            String formattedStartDate = arrivalDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                            String formattedEndDate = departureDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-                            dictionary.insertDestiny(newDestiny, geocodingResponse, tomorrowResponse);
+                            Date startTime = Date.valueOf(formattedStartDate);
+                            Date endTime = Date.valueOf(formattedEndDate);
 
-                            Toast.makeText(NewDestination.this, "Destination saved!", Toast.LENGTH_SHORT).show();
-                            finish();
+                            tomorrowioService.getWeatherData(geocodingResponse, startTime, endTime, new Callback<TomorrowResponse>() {
+                                @Override
+                                public void onResponse(Call<TomorrowResponse> call, Response<TomorrowResponse> response) {
+                                    if (response.isSuccessful() && response.body() != null) {
+                                        TomorrowResponse tomorrowResponse = response.body();
+                                    } else {
+                                        try {
+                                            String errorBody = response.errorBody().string();
+                                            Log.e("API Error", errorBody);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        Toast.makeText(NewDestination.this, "Error fetching weather data: " + response.code(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<TomorrowResponse> call, Throwable t) {
+                                    Toast.makeText(NewDestination.this, "Error fetching weather data: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         } else {
                             Toast.makeText(NewDestination.this, "Geocoding failed or no results found.", Toast.LENGTH_SHORT).show();
                         }
