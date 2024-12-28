@@ -6,25 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:fitsSystemWindows="true"
+    android:layout_marginTop="24dp"
     tools:context="weatherapp.ui.NewDestination">
-
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/purple_500"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="TripX - New destination"
-        app:titleTextColor="@android:color/white" />
 
     <!-- Destination Label and Input -->
     <LinearLayout
         android:id="@+id/layoutDestination"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
         android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="vertical"
         android:gravity="start">
 
@@ -55,8 +48,6 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Clear Destination"
             android:layout_marginTop="8dp" />
-
-        <!-- Destination Label (Bottom) -->
     </LinearLayout>
 
     <!-- DatePickers Section -->
@@ -66,6 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/layoutDestination"
         android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -133,7 +126,9 @@
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:weightSum="2"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
 
         <Button
             android:id="@+id/btnCancel"
