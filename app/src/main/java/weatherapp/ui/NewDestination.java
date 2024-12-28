@@ -8,22 +8,22 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import api.tomorrowio.response.TomorrowResponse;
-import database.dto.NewTripDTO;
 import ssedm.lcc.example.newdictionarywithddbb.R;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
+import java.util.List;
 
 import api.nominatim.GeocodingResponse;
+import api.nominatim.NominatimService;
 import database.Dictionary;
 import database.dto.NewDestinyDTO;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewDestination extends AppCompatActivity {
 
@@ -39,6 +39,7 @@ public class NewDestination extends AppCompatActivity {
     private DateTimeFormatter dateFormatter;
 
     private Dictionary dictionary;
+    private NominatimService nominatimService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class NewDestination extends AppCompatActivity {
         departureDatePicker.setText(departureDate.format(dateFormatter));
 
         dictionary = new Dictionary(this);
+        nominatimService = new NominatimService();
 
         btnClearDestination.setOnClickListener(v -> editTextDestination.setText(""));
 
@@ -72,26 +74,35 @@ public class NewDestination extends AppCompatActivity {
             if (destination.isEmpty()) {
                 Toast.makeText(NewDestination.this, "Please enter a destination.", Toast.LENGTH_SHORT).show();
             } else {
-                NewTripDTO trip = new NewTripDTO("test");
-                dictionary.insertTrip(trip);
 
+                nominatimService.getCoordinates(destination, new Callback<List<GeocodingResponse>>() {
+                    @Override
+                    public void onResponse(Call<List<GeocodingResponse>> call, Response<List<GeocodingResponse>> response) {
+                        if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                            GeocodingResponse geocodingResponse = response.body().get(0);
 
-                NewDestinyDTO newDestiny = new NewDestinyDTO();
-                newDestiny.setName(destination);
-                newDestiny.setArrivalDate(arrivalDate);
-                newDestiny.setDepartureDate(departureDate);
-                newDestiny.setTripId(1);
+                            NewDestinyDTO newDestiny = new NewDestinyDTO();
+                            newDestiny.setName(destination);
+                            newDestiny.setArrivalDate(arrivalDate);
+                            newDestiny.setDepartureDate(departureDate);
+                            newDestiny.setTripId(1);
 
-                GeocodingResponse geocodingResponse = new GeocodingResponse();
-                geocodingResponse.setLat(0.0f);
-                geocodingResponse.setLon(0.0f);
+                            TomorrowResponse tomorrowResponse = new TomorrowResponse();
 
-                TomorrowResponse tomorrowResponse = new TomorrowResponse();
+                            dictionary.insertDestiny(newDestiny, geocodingResponse, tomorrowResponse);
 
-                dictionary.insertDestiny(newDestiny, geocodingResponse, tomorrowResponse);
+                            Toast.makeText(NewDestination.this, "Destination saved!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(NewDestination.this, "Geocoding failed or no results found.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-                Toast.makeText(NewDestination.this, "Destination saved!", Toast.LENGTH_SHORT).show();
-                finish();
+                    @Override
+                    public void onFailure(Call<List<GeocodingResponse>> call, Throwable t) {
+                        Toast.makeText(NewDestination.this, "Error fetching geocoding data.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
