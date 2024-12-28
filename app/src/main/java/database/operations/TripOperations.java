@@ -14,7 +14,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,8 +74,8 @@ public class TripOperations {
         TripEntity entity = new TripEntity();
         entity.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_ID)));
         entity.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_NAME)));
-        entity.setInitDate(Date.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_INIT_DATE))));
-        entity.setEndDate(Date.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_END_DATE))));
+        entity.setInitDate(LocalDate.parse(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_INIT_DATE))));
+        entity.setEndDate(LocalDate.parse(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_END_DATE))));
         entity.setNDestinies(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_NDESTINIES)));
         return entity;
     }

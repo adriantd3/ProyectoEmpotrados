@@ -16,7 +16,7 @@ public class DateInfoTable implements InterfaceTable {
         return "CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_NAME_ID + " INTEGER PRIMARY KEY," +
                 COLUMN_NAME_DESTINY_ID + " INTEGER," +
-                COLUMN_NAME_DATE + " DATE," +
+                COLUMN_NAME_DATE + " TEXT," +
                 COLUMN_NAME_TMP + " REAL," +
                 COLUMN_NAME_WEATHER_CODE + " INTEGER, " +
                 "FOREIGN KEY(" + COLUMN_NAME_DESTINY_ID + ") REFERENCES " + DestinyTable.TABLE_NAME + "(" + DestinyTable.COLUMN_NAME_ID + ") ON DELETE CASCADE ON UPDATE CASCADE)";

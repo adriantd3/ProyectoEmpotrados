@@ -1,6 +1,6 @@
 package database.entities;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.Data;
@@ -12,7 +12,7 @@ public class DestinyEntity{
     private String name;
     private Float lat;
     private Float lon;
-    private Date arrivalDate;
-    private Date departureDate;
+    private LocalDate arrivalDate;
+    private LocalDate departureDate;
     private List<DateInfoEntity> dateInfo;
 }

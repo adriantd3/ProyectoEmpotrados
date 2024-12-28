@@ -14,15 +14,18 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import api.nominatim.GeocodingResponse;
+import database.entities.DateInfoEntity;
 import database.entities.DestinyEntity;
 import database.dto.NewDestinyDTO;
 
 public class DestinyOperations {
+
+    private DateInfoOperations dateInfoOperations = new DateInfoOperations();
     public List<DestinyEntity> getAllByTripId(SQLiteDatabase db, Integer tripId) {
         Cursor cursor = db.query(
                 TABLE_NAME,
@@ -35,9 +38,12 @@ public class DestinyOperations {
         );
         List<DestinyEntity> entities = new ArrayList<>();
         while (cursor.moveToNext()) {
-            entities.add(mapCursorToEntity(cursor));
+            DestinyEntity entity = mapCursorToEntity(cursor);
+            entity.setDateInfo(dateInfoOperations.getAllDateInfoByDestinyId(db, entity.getId()));
+            entities.add(entity);
         }
         cursor.close();
+
         return entities;
     }
 
@@ -54,13 +60,14 @@ public class DestinyOperations {
         DestinyEntity entity = null;
         if (cursor.moveToFirst()) {
             entity = mapCursorToEntity(cursor);
+            entity.setDateInfo(dateInfoOperations.getAllDateInfoByDestinyId(db, entity.getId()));
         }
         cursor.close();
         return entity;
     }
 
-    public void insertDestiny(SQLiteDatabase db, NewDestinyDTO newDestinyDTO, GeocodingResponse response) {
-        db.insert(TABLE_NAME, null, mapEntitiesToContentValues(newDestinyDTO, response));
+    public Integer insertDestiny(SQLiteDatabase db, NewDestinyDTO newDestinyDTO, GeocodingResponse response) {
+        return (int) db.insert(TABLE_NAME, null, mapEntitiesToContentValues(newDestinyDTO, response));
     }
 
     public void updateDestiny(SQLiteDatabase db, DestinyEntity destiny, GeocodingResponse geocoding) {
@@ -77,8 +84,8 @@ public class DestinyOperations {
         entity.setTripId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_TRIP_ID)));
         entity.setLat(cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_NAME_LAT)));
         entity.setLon(cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_NAME_LON)));
-        entity.setArrivalDate(Date.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_ARRIVAL_DATE))));
-        entity.setDepartureDate(Date.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_DEPARTURE_DATE))));
+        entity.setArrivalDate(LocalDate.parse(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_ARRIVAL_DATE))));
+        entity.setDepartureDate(LocalDate.parse(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_DEPARTURE_DATE))));
         return entity;
     }
 

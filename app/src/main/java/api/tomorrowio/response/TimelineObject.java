@@ -1,6 +1,6 @@
 package api.tomorrowio.response;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class TimelineObject {
     private String timestep;
-    private Date endTime;
-    private Date startTime;
+    private LocalDate endTime;
+    private LocalDate startTime;
     private List<IntervalObject> intervals;
 }

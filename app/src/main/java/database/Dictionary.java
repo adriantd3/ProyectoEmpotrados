@@ -3,10 +3,18 @@ package database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import api.nominatim.GeocodingResponse;
+import api.tomorrowio.response.IntervalObject;
+import api.tomorrowio.response.TomorrowResponse;
+import api.tomorrowio.response.ValueObject;
+import database.dto.NewDateInfoDTO;
 import database.dto.NewDestinyDTO;
 import database.dto.NewTripDTO;
 import database.operations.DateInfoOperations;
@@ -68,12 +76,18 @@ public class Dictionary {
         return destinyOperations.getDestinyById(db, id);
     }
 
-    public void insertDestiny(NewDestinyDTO destiny, GeocodingResponse response) {
-        destinyOperations.insertDestiny(db, destiny, response);
+    public void insertDestiny(NewDestinyDTO destiny, GeocodingResponse geocodingResponse, TomorrowResponse tomorrowResponse) {
+        Integer destinyId = destinyOperations.insertDestiny(db, destiny, geocodingResponse);
+
+        insertAllDateInfo(destinyId, tomorrowResponse);
+        recalculateTripValues(destiny.getTripId());
     }
 
-    public void updateDestiny(DestinyEntity destiny, GeocodingResponse geocoding) {
+    public void updateDestiny(DestinyEntity destiny, GeocodingResponse geocoding, TomorrowResponse tomorrowResponse) {
         destinyOperations.updateDestiny(db, destiny, geocoding);
+
+        insertAllDateInfo(destiny.getId(), tomorrowResponse);
+        recalculateTripValues(destiny.getTripId());
     }
 
     public void deleteDestiny(Integer id) {
@@ -82,22 +96,83 @@ public class Dictionary {
 
     // DateInfoEntity methods
     public List<DateInfoEntity> getDateInfoByDestinyId(Integer destinyId) {
-        return dateInfoOperations.getDateInfoByDestinyId(db, destinyId);
+        return dateInfoOperations.getAllDateInfoByDestinyId(db, destinyId);
     }
 
-    public DateInfoEntity getDateInfoById(Integer id) {
-        return dateInfoOperations.getDateInfoById(db, id);
+    private void insertAllDateInfo(Integer destinyId, TomorrowResponse tomorrowResponse){
+        HashMap<LocalDate, List<ValueObject>> sortedIntervals = mapIntervalsByDate(tomorrowResponse);
+        for (LocalDate date : sortedIntervals.keySet()) {
+            float avgTmp = calculateAverageTemperature(sortedIntervals.get(date));
+            int mostCommonWeatherCode = findMostCommonWeatherCode(sortedIntervals.get(date));
+
+            NewDateInfoDTO dateInfo = new NewDateInfoDTO();
+            dateInfo.setDestinyId(destinyId);
+            dateInfo.setDate(date);
+            dateInfo.setTmp(avgTmp);
+            dateInfo.setWeatherCode(mostCommonWeatherCode);
+
+            dateInfoOperations.insertDateInfo(db, dateInfo);
+        }
     }
 
-    public void insertDateInfo(DateInfoEntity dateInfo) {
-        dateInfoOperations.insertDateInfo(db, dateInfo);
+    private void recalculateTripValues(Integer tripId) {
+        TripEntity trip = tripOperations.getTripById(db, tripId);
+        List<DestinyEntity> destinyEntities = destinyOperations.getAllByTripId(db, tripId);
+
+        LocalDate minDate = LocalDate.MAX, maxDate = LocalDate.MIN;
+        float maxTmp = -1000, minTmp = 1000,  sumTmp = 0;
+        int count = 0;
+        for (DestinyEntity destinyEntity : destinyEntities) {
+            for (DateInfoEntity dateInfoEntity : destinyEntity.getDateInfo()){
+                if (dateInfoEntity.getDate().isBefore(minDate)) {
+                    minDate = dateInfoEntity.getDate();
+                }
+                if (dateInfoEntity.getDate().isAfter(maxDate)) {
+                    maxDate = dateInfoEntity.getDate();
+                }
+                if (dateInfoEntity.getTmp() > maxTmp) {
+                    maxTmp = dateInfoEntity.getTmp();
+                }
+                if (dateInfoEntity.getTmp() < minTmp) {
+                    minTmp = dateInfoEntity.getTmp();
+                }
+                sumTmp += dateInfoEntity.getTmp();
+                count++;
+            }
+        }
+        float avgTmp = sumTmp / count;
+
+        trip.setInitDate(minDate);
+        trip.setEndDate(maxDate);
+        trip.setMinTmp(minTmp);
+        trip.setMaxTmp(maxTmp);
+        trip.setAvgTmp(avgTmp);
+
+        tripOperations.updateTrip(db, trip);
     }
 
-    public void updateDateInfo(DateInfoEntity dateInfo) {
-        dateInfoOperations.updateDateInfo(db, dateInfo);
+    private HashMap<LocalDate, List<ValueObject>> mapIntervalsByDate(TomorrowResponse tomorrowResponse) {
+        HashMap<LocalDate, List<ValueObject>> sortedIntervals = new HashMap<>();
+        for (IntervalObject interval : tomorrowResponse.getData().getTimelines().get(0).getIntervals()) {
+            LocalDate date = interval.getStartTime();
+            sortedIntervals.computeIfAbsent(date, k -> new ArrayList<>()).add(interval.getValues());
+        }
+        return sortedIntervals;
     }
 
-    public void deleteDateInfo(Integer id) {
-        dateInfoOperations.deleteDateInfo(db, id);
+    private float calculateAverageTemperature(List<ValueObject> values) {
+        double sumTmp = values.stream().mapToDouble(ValueObject::getTemperature).sum();
+        return (float) sumTmp / values.size();
+    }
+
+    private int findMostCommonWeatherCode(List<ValueObject> values) {
+        HashMap<Integer, Integer> weatherCodes = new HashMap<>();
+        for (ValueObject value : values) {
+            weatherCodes.merge(value.getWeatherCode(), 1, Integer::sum);
+        }
+        return weatherCodes.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .orElseThrow(() -> new IllegalStateException("No weather codes found"))
+                .getKey();
     }
 }

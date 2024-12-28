@@ -19,8 +19,8 @@ public class TripTable implements InterfaceTable {
         return "CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_NAME_ID + " INTEGER PRIMARY KEY," +
                 COLUMN_NAME_NAME + " TEXT," +
-                COLUMN_NAME_INIT_DATE + " DATE NULL," +
-                COLUMN_NAME_END_DATE + " DATE NULL," +
+                COLUMN_NAME_INIT_DATE + " TEXT NULL," +
+                COLUMN_NAME_END_DATE + " TEXT NULL," +
                 COLUMN_NAME_NDESTINIES + " INTEGER," +
                 COLUMN_NAME_MIN_TMP + " FLOAT NULL," +
                 COLUMN_NAME_AVG_TMP + " FLOAT NULL," +

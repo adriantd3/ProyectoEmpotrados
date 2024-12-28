@@ -1,11 +1,11 @@
 package api.tomorrowio.response;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import lombok.Data;
 
 @Data
 public class IntervalObject {
-    private Date startTime;
+    private LocalDate startTime;
     private ValueObject values;
 }

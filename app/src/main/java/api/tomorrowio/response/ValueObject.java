@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class ValueObject {
-    private String temperature;
-    private String weatherCode;
+    private Float temperature;
+    private Integer weatherCode;
 }
