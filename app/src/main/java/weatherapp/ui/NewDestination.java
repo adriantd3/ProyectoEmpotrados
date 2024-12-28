@@ -11,10 +11,19 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import api.tomorrowio.response.TomorrowResponse;
+import database.dto.NewTripDTO;
 import ssedm.lcc.example.newdictionarywithddbb.R;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+
+import api.nominatim.GeocodingResponse;
+import database.Dictionary;
+import database.dto.NewDestinyDTO;
 
 public class NewDestination extends AppCompatActivity {
 
@@ -25,16 +34,17 @@ public class NewDestination extends AppCompatActivity {
     private Button btnCancel;
     private ImageButton btnClearDestination;
 
-    private Calendar calendar;
-    private SimpleDateFormat dateFormat;
+    private LocalDate arrivalDate;
+    private LocalDate departureDate;
+    private DateTimeFormatter dateFormatter;
+
+    private Dictionary dictionary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this); // Activar Edge to Edge para que la interfaz ocupe toda la pantalla
-        setContentView(R.layout.activity_new_destination); // Establecer el layout de la actividad
+        setContentView(R.layout.activity_new_destination);
 
-        // Inicializar las vistas
         editTextDestination = findViewById(R.id.editTextDestination);
         arrivalDatePicker = findViewById(R.id.arrivalDatePicker);
         departureDatePicker = findViewById(R.id.departureDatePicker);
@@ -42,30 +52,44 @@ public class NewDestination extends AppCompatActivity {
         btnCancel = findViewById(R.id.btnCancel);
         btnClearDestination = findViewById(R.id.btnClearDestination);
 
-        // Establecer el formato de la fecha
-        dateFormat = new SimpleDateFormat("dd/MM/yy");
-        calendar = Calendar.getInstance(); // Crear una instancia de calendario
+        dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        arrivalDate = LocalDate.now();
+        departureDate = LocalDate.now();
 
-        // Establecer las fechas iniciales
-        arrivalDatePicker.setText(dateFormat.format(calendar.getTime()));
-        departureDatePicker.setText(dateFormat.format(calendar.getTime()));
+        arrivalDatePicker.setText(arrivalDate.format(dateFormatter));
+        departureDatePicker.setText(departureDate.format(dateFormatter));
 
-        // Configurar el botón de limpiar el destino
+        dictionary = new Dictionary(this);
+
         btnClearDestination.setOnClickListener(v -> editTextDestination.setText(""));
 
-        // Configurar los pickers de fecha de llegada y salida
         arrivalDatePicker.setOnClickListener(v -> showDatePickerDialog(arrivalDatePicker));
         departureDatePicker.setOnClickListener(v -> showDatePickerDialog(departureDatePicker));
 
-        // Configurar el botón de guardar
         btnSave.setOnClickListener(v -> {
             String destination = editTextDestination.getText().toString();
-            String arrivalDate = arrivalDatePicker.getText().toString();
-            String departureDate = departureDatePicker.getText().toString();
 
             if (destination.isEmpty()) {
                 Toast.makeText(NewDestination.this, "Please enter a destination.", Toast.LENGTH_SHORT).show();
             } else {
+                NewTripDTO trip = new NewTripDTO("test");
+                dictionary.insertTrip(trip);
+
+
+                NewDestinyDTO newDestiny = new NewDestinyDTO();
+                newDestiny.setName(destination);
+                newDestiny.setArrivalDate(arrivalDate);
+                newDestiny.setDepartureDate(departureDate);
+                newDestiny.setTripId(1);
+
+                GeocodingResponse geocodingResponse = new GeocodingResponse();
+                geocodingResponse.setLat(0.0f);
+                geocodingResponse.setLon(0.0f);
+
+                TomorrowResponse tomorrowResponse = new TomorrowResponse();
+
+                dictionary.insertDestiny(newDestiny, geocodingResponse, tomorrowResponse);
+
                 Toast.makeText(NewDestination.this, "Destination saved!", Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -74,20 +98,24 @@ public class NewDestination extends AppCompatActivity {
         btnCancel.setOnClickListener(v -> finish());
     }
 
-    // Método para mostrar el DatePickerDialog
     private void showDatePickerDialog(TextView targetTextView) {
         DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, dayOfMonth) -> {
-            calendar.set(year, month, dayOfMonth); // Establecer la fecha seleccionada en el calendario
-            targetTextView.setText(dateFormat.format(calendar.getTime())); // Mostrar la fecha en el TextView correspondiente
+            LocalDate selectedDate = LocalDate.of(year, month + 1, dayOfMonth);
+            if (targetTextView == arrivalDatePicker) {
+                arrivalDate = selectedDate;
+                targetTextView.setText(arrivalDate.format(dateFormatter));
+            } else {
+                departureDate = selectedDate;
+                targetTextView.setText(departureDate.format(dateFormatter));
+            }
         };
 
-        // Mostrar el DatePickerDialog para la fecha de llegada o salida
         new DatePickerDialog(
                 NewDestination.this,
                 dateSetListener,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
+                arrivalDate.getYear(),
+                arrivalDate.getMonthValue() - 1,
+                arrivalDate.getDayOfMonth()
         ).show();
     }
 }

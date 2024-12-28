@@ -108,6 +108,7 @@ public class DestinyOperations {
     private ContentValues mapEntitiesToContentValues(NewDestinyDTO destiny, GeocodingResponse geocoding) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_NAME, destiny.getName());
+        values.put(COLUMN_NAME_TRIP_ID, destiny.getTripId());
         values.put(COLUMN_NAME_LAT, geocoding.getLat());
         values.put(COLUMN_NAME_LON, geocoding.getLon());
         values.put(COLUMN_NAME_ARRIVAL_DATE, destiny.getArrivalDate().toString());

@@ -18,6 +18,7 @@ public class DestinyTable implements InterfaceTable {
         return "CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_NAME_ID + " INTEGER PRIMARY KEY," +
                 COLUMN_NAME_TRIP_ID + " INTEGER," +
+                COLUMN_NAME_NAME + " TEXT," +
                 COLUMN_NAME_LAT + " REAL," +
                 COLUMN_NAME_LON + " REAL," +
                 COLUMN_NAME_ARRIVAL_DATE + " TEXT," +
