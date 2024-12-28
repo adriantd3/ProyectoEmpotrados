@@ -11,7 +11,7 @@ import ssedm.lcc.example.newdictionarywithddbb.MainActivity;
 import ssedm.lcc.example.newdictionarywithddbb.R;
 import ssedm.lcc.example.newdictionarywithddbb.SingletonMap;
 
-public class HomePage extends AppCompatActivity {
+public class TripPage extends AppCompatActivity {
     public static final String SHARED_AGENDA = "SHARED_AGENDA";
 
     private Dictionary dict;
@@ -19,29 +19,37 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_trip_page);
 
         initDictionary();
     }
 
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.newTripButton:
-                redirectToNewTrip();
-                break;
             case R.id.newDestinationButton:
-                redirectToNewDestination();
+                redirectToNewdestination();
+                break;
+            case R.id.editTripButton:
+                redirectToEditTrip();
+                break;
+            case R.id.deleteTripButton:
+                redirectToDeleteTrip();
                 break;
         }
     }
 
-    private void redirectToNewTrip() {
-        Intent it = new Intent(this, TripPage.class);
-        startActivity(it);
+    private void redirectToEditTrip() {
+        //Intent it = new Intent(this, NewTrip.class);
+        //startActivity(it);
     }
 
-    // Temporary redirect to NewDestination
-    private void redirectToNewDestination() {
+    private void redirectToDeleteTrip() {
+        //Intent it = new Intent(this, NewTrip.class);
+        //startActivity(it);
+    }
+
+    // Temporary redirect to Newdestination
+    private void redirectToNewdestination() {
         Intent it = new Intent(this, NewDestination.class);
         startActivity(it);
     }
@@ -50,7 +58,7 @@ public class HomePage extends AppCompatActivity {
         dict = (Dictionary) SingletonMap.getInstance().get(MainActivity.SHARED_AGENDA);
         if(dict == null) {
             dict = new Dictionary(getApplicationContext());
-            SingletonMap.getInstance().put(HomePage.SHARED_AGENDA, dict);
+            SingletonMap.getInstance().put(TripPage.SHARED_AGENDA, dict);
         }
     }
 }

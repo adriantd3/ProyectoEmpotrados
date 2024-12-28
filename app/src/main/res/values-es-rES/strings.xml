@@ -32,11 +32,11 @@
     <string name="enter_trip_name">Introduce el nombre del viaje</string>
     <string name="trip_name_error">El nombre del viaje es obligatorio</string>
 
-    <!-- Strings used for fragments for NewDestiny -->
-    <string name="new_destiny_activity_name">Crear un nuevo destino</string>
-    <string name="destiny_label">Destino</string>
-    <string name="destiny_placeholder">Introduce el destino</string>
-    <string name="destiny_error">El destino es obligatorio</string>
+    <!-- Strings used for fragments for NewDestination -->
+    <string name="new_destination_activity_name">Crear un nuevo destino</string>
+    <string name="destination_label">Destino</string>
+    <string name="destination_placeholder">Introduce el destino</string>
+    <string name="destination_error">El destino es obligatorio</string>
 
     <string name="arrival_date_label">Fecha de llegada</string>
     <string name="departure_date_label">Fecha de salida</string>

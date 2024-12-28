@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".NewDestiny">
+    tools:context="weatherapp.ui.NewDestination">
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
@@ -15,12 +15,12 @@
         android:layout_height="wrap_content"
         android:background="@color/purple_500"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="TripX - New destiny"
+        app:title="TripX - New destination"
         app:titleTextColor="@android:color/white" />
 
-    <!-- Destiny Label and Input -->
+    <!-- Destination Label and Input -->
     <LinearLayout
-        android:id="@+id/layoutDestiny"
+        android:id="@+id/layoutDestination"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
@@ -28,35 +28,35 @@
         android:orientation="vertical"
         android:gravity="start">
 
-        <!-- Destiny Label (Top) -->
+        <!-- Destination Label (Top) -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/destiny_label"
+            android:text="@string/destination_label"
             android:textColor="@android:color/darker_gray"
             android:textSize="16sp" />
 
-        <!-- Destiny Input Field -->
+        <!-- Destination Input Field -->
         <EditText
-            android:id="@+id/editTextDestiny"
+            android:id="@+id/editTextDestination"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Destiny"
+            android:hint="Enter Destination"
             android:padding="12dp"
             android:inputType="text"
             android:background="@drawable/black_border_shape" />
 
         <!-- Clear Button -->
         <ImageButton
-            android:id="@+id/btnClearDestiny"
+            android:id="@+id/btnClearDestination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Clear Destiny"
+            android:contentDescription="Clear Destination"
             android:layout_marginTop="8dp" />
 
-        <!-- Destiny Label (Bottom) -->
+        <!-- Destination Label (Bottom) -->
     </LinearLayout>
 
     <!-- DatePickers Section -->
@@ -64,7 +64,7 @@
         android:id="@+id/layoutDates"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layoutDestiny"
+        android:layout_below="@id/layoutDestination"
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
         android:weightSum="2">

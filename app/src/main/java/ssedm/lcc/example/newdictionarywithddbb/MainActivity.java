@@ -3,10 +3,7 @@ package ssedm.lcc.example.newdictionarywithddbb;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -14,8 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import weatherapp.ui.NewDestiny;
-import weatherapp.ui.NewTrip;
+import weatherapp.ui.NewDestination;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void redirect(){
         //Intent it = new Intent(this, AddContactActivity.class);
-        Intent it = new Intent(this, NewDestiny.class);
+        Intent it = new Intent(this, NewDestination.class);
         startActivity(it);
     }
 

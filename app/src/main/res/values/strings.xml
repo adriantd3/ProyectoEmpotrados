@@ -33,11 +33,11 @@
     <string name="trip_name_error">Trip name is required</string>
 
 
-    <!-- Strings used for fragments for NewDestiny -->
-    <string name="new_destiny_activity_name">Create a new destiny</string>
-    <string name="destiny_label">Destiny</string>
-    <string name="destiny_placeholder">Enter destiny </string>
-    <string name="destiny_error">Destiny is required</string>
+    <!-- Strings used for fragments for NewDestination -->
+    <string name="new_destination_activity_name">Create a new destination</string>
+    <string name="destination_label">Destination</string>
+    <string name="destination_placeholder">Enter destination </string>
+    <string name="destination_error">Destination is required</string>
 
     <string name="arrival_date_label">Arrival date</string>
     <string name="departure_date_label">Departure date</string>

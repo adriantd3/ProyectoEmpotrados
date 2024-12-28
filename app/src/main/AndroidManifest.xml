@@ -20,9 +20,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="weatherapp.ui.NewDestiny"
+            android:name="weatherapp.ui.TripPage"
             android:exported="false"
-            android:label="@string/new_destiny_activity_name" />
+            android:label="Trip_Name" />
+        <activity
+            android:name="weatherapp.ui.NewDestination"
+            android:exported="false"
+            android:label="@string/new_destination_activity_name" />
         <activity
             android:name="weatherapp.ui.NewTrip"
             android:exported="false"
