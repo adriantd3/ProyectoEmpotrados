@@ -86,6 +86,7 @@ public class Dictionary {
     public void updateDestiny(DestinyEntity destiny, GeocodingResponse geocoding, TomorrowResponse tomorrowResponse) {
         destinyOperations.updateDestiny(db, destiny, geocoding);
 
+        deleteAllDestinyDateInfo(destiny);
         insertAllDateInfo(destiny.getId(), tomorrowResponse);
         recalculateTripValues(destiny.getTripId());
     }
@@ -147,7 +148,7 @@ public class Dictionary {
         trip.setMinTmp(minTmp);
         trip.setMaxTmp(maxTmp);
         trip.setAvgTmp(avgTmp);
-        trip.setNDestinies(trip.getNDestinies() + 1);
+        trip.setNDestinies(destinyEntities.size());
 
         tripOperations.updateTrip(db, trip);
     }
@@ -175,5 +176,12 @@ public class Dictionary {
                 .max(Map.Entry.comparingByValue())
                 .orElseThrow(() -> new IllegalStateException("No weather codes found"))
                 .getKey();
+    }
+
+    private void deleteAllDestinyDateInfo(DestinyEntity destiny){
+        for (DateInfoEntity dateInfoEntity : destiny.getDateInfo()){
+            dateInfoOperations.deleteDateInfoById(db, dateInfoEntity.getId());
+        }
+        destiny.setDateInfo(new ArrayList<>());
     }
 }

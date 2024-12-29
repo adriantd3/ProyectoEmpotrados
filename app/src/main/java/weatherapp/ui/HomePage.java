@@ -52,7 +52,8 @@ public class HomePage extends AppCompatActivity {
 
     // Temporary redirect to NewDestination
     private void redirectToNewDestination() {
-        launcher.launch(new Intent(this, NewDestination.class));
+        //launcher.launch(new Intent(this, NewDestination.class));
+        launcher.launch(new Intent(this, EditDestination.class));
     }
 
     private void initDictionary() {

@@ -61,6 +61,14 @@ public class DateInfoOperations {
         return (int) db.insert(TABLE_NAME, null, mapEntityToContentValues(dateInfo));
     }
 
+    public void deleteDateInfoById(SQLiteDatabase db, Integer id) {
+        db.delete(
+                TABLE_NAME,
+                COLUMN_NAME_ID + " = ?",
+                new String[]{id.toString()}
+        );
+    }
+
     private DateInfoEntity mapCursorToEntity(Cursor cursor) {
         DateInfoEntity entity = new DateInfoEntity();
         entity.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_ID)));

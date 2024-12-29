@@ -81,6 +81,7 @@ public class DestinyOperations {
     private DestinyEntity mapCursorToEntity(Cursor cursor) {
         DestinyEntity entity = new DestinyEntity();
         entity.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_ID)));
+        entity.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_NAME)));
         entity.setTripId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_TRIP_ID)));
         entity.setLat(cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_NAME_LAT)));
         entity.setLon(cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_NAME_LON)));

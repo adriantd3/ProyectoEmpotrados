@@ -12,23 +12,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import api.tomorrowio.TomorrowioService;
 import api.tomorrowio.response.TomorrowResponse;
-import database.entities.TripEntity;
-import ssedm.lcc.example.newdictionarywithddbb.R;
+import database.entities.DestinyEntity;
+import database.Dictionary;
+import api.nominatim.GeocodingResponse;
+import api.nominatim.NominatimService;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import api.nominatim.GeocodingResponse;
-import api.nominatim.NominatimService;
-import database.Dictionary;
-import database.dto.NewDestinyDTO;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ssedm.lcc.example.newdictionarywithddbb.R;
 
-public class NewDestination extends AppCompatActivity {
+public class EditDestination extends AppCompatActivity {
 
     private EditText editTextDestination;
     private TextView arrivalDatePicker;
@@ -42,12 +41,13 @@ public class NewDestination extends AppCompatActivity {
     private Dictionary dictionary;
     private NominatimService nominatimService;
     private TomorrowioService tomorrowioService;
-    private static Integer tripId = 9;
+    private static Integer destinyId = 11;
+    private DestinyEntity destiny;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_destination);
+        setContentView(R.layout.activity_edit_destination);
 
         editTextDestination = findViewById(R.id.editTextDestination);
         arrivalDatePicker = findViewById(R.id.arrivalDatePicker);
@@ -59,37 +59,37 @@ public class NewDestination extends AppCompatActivity {
         arrivalDate = LocalDate.now();
         departureDate = LocalDate.now();
 
-        arrivalDatePicker.setText(arrivalDate.format(dateFormatter));
-        departureDatePicker.setText(departureDate.format(dateFormatter));
-
         dictionary = new Dictionary(this);
         nominatimService = new NominatimService();
         tomorrowioService = new TomorrowioService();
 
-        TripEntity actualTrip = dictionary.getTripById(tripId);
-        setTitle(actualTrip.getName() + " - New Destination");
+        destiny = dictionary.getDestinyById(destinyId);
+        setTitle("Edit Destination - " + destiny.getName());
+        editTextDestination.setText(destiny.getName());
+        arrivalDate = destiny.getArrivalDate();
+        departureDate = destiny.getDepartureDate();
 
+        arrivalDatePicker.setText(arrivalDate.format(dateFormatter));
+        departureDatePicker.setText(departureDate.format(dateFormatter));
 
         arrivalDatePicker.setOnClickListener(v -> showDatePickerDialog(arrivalDatePicker));
         departureDatePicker.setOnClickListener(v -> showDatePickerDialog(departureDatePicker));
 
         btnSave.setOnClickListener(v -> {
-            String destination = editTextDestination.getText().toString();
+            String updatedDestination = editTextDestination.getText().toString();
 
-            if (destination.isEmpty()) {
-                Toast.makeText(NewDestination.this, "Please enter a destination.", Toast.LENGTH_SHORT).show();
+            if (updatedDestination.isEmpty()) {
+                Toast.makeText(EditDestination.this, "Please enter a destination.", Toast.LENGTH_SHORT).show();
             } else {
-                nominatimService.getCoordinates(destination, new Callback<List<GeocodingResponse>>() {
+                destiny.setName(updatedDestination);
+                destiny.setArrivalDate(arrivalDate);
+                destiny.setDepartureDate(departureDate);
+
+                nominatimService.getCoordinates(updatedDestination, new Callback<List<GeocodingResponse>>() {
                     @Override
                     public void onResponse(Call<List<GeocodingResponse>> call, Response<List<GeocodingResponse>> response) {
                         if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                             GeocodingResponse geocodingResponse = response.body().get(0);
-
-                            NewDestinyDTO newDestiny = new NewDestinyDTO();
-                            newDestiny.setName(destination);
-                            newDestiny.setArrivalDate(arrivalDate);
-                            newDestiny.setDepartureDate(departureDate);
-                            newDestiny.setTripId(tripId);
 
                             String formattedStartDate = arrivalDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                             String formattedEndDate = departureDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -101,8 +101,8 @@ public class NewDestination extends AppCompatActivity {
                                 public void onResponse(Call<TomorrowResponse> call, Response<TomorrowResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {
                                         TomorrowResponse tomorrowResponse = response.body();
-                                        dictionary.insertDestiny(newDestiny, geocodingResponse, tomorrowResponse);
-                                        Toast.makeText(NewDestination.this, "New destination added successfully!!", Toast.LENGTH_SHORT).show();
+                                        dictionary.updateDestiny(destiny, geocodingResponse, tomorrowResponse);
+                                        Toast.makeText(EditDestination.this, "Destination updated successfully!", Toast.LENGTH_SHORT).show();
                                         finish();
                                     } else {
                                         try {
@@ -111,7 +111,7 @@ public class NewDestination extends AppCompatActivity {
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
-                                        Toast.makeText(NewDestination.this, "Incorrect dates", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(EditDestination.this, "Incorrect dates", Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
@@ -121,13 +121,13 @@ public class NewDestination extends AppCompatActivity {
                                 }
                             });
                         } else {
-                            Toast.makeText(NewDestination.this, "Geocoding failed or no results found.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditDestination.this, "Geocoding failed or no results found.", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<GeocodingResponse>> call, Throwable t) {
-                        Toast.makeText(NewDestination.this, "Error fetching geocoding data.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditDestination.this, "Error fetching geocoding data.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -142,14 +142,16 @@ public class NewDestination extends AppCompatActivity {
             if (targetTextView == arrivalDatePicker) {
                 arrivalDate = selectedDate;
                 targetTextView.setText(arrivalDate.format(dateFormatter));
+                destiny.setArrivalDate(arrivalDate);
             } else {
                 departureDate = selectedDate;
                 targetTextView.setText(departureDate.format(dateFormatter));
+                destiny.setDepartureDate(departureDate);
             }
         };
 
         new DatePickerDialog(
-                NewDestination.this,
+                EditDestination.this,
                 dateSetListener,
                 arrivalDate.getYear(),
                 arrivalDate.getMonthValue() - 1,
