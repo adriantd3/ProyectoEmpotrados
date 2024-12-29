@@ -1,5 +1,6 @@
 package database.tables;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
 public class TripTable implements InterfaceTable {
@@ -35,6 +36,15 @@ public class TripTable implements InterfaceTable {
 
     @Override
     public void addInitialData(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME_NAME, "Trip to the beach");
+        values.put(COLUMN_NAME_INIT_DATE, "2024-12-29");
+        values.put(COLUMN_NAME_END_DATE, "2024-12-30");
+        values.put(COLUMN_NAME_NDESTINIES, 1);
+        values.put(COLUMN_NAME_MIN_TMP, 12.0);
+        values.put(COLUMN_NAME_AVG_TMP, 16.0);
+        values.put(COLUMN_NAME_MAX_TMP, 20.0);
 
+        db.insert(TABLE_NAME, null, values);
     }
 }

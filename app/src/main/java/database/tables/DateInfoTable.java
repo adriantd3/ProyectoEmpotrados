@@ -1,5 +1,6 @@
 package database.tables;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
 public class DateInfoTable implements InterfaceTable {
@@ -29,6 +30,18 @@ public class DateInfoTable implements InterfaceTable {
 
     @Override
     public void addInitialData(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME_DESTINY_ID, 1);
+        values.put(COLUMN_NAME_DATE, "2024-12-29");
+        values.put(COLUMN_NAME_TMP, 12.0);
+        values.put(COLUMN_NAME_WEATHER_CODE, 1000);
 
+        db.insert(TABLE_NAME, null, values);
+
+        values.put(COLUMN_NAME_DATE, "2024-12-30");
+        values.put(COLUMN_NAME_TMP, 16.0);
+        values.put(COLUMN_NAME_WEATHER_CODE, 1001);
+
+        db.insert(TABLE_NAME, null, values);
     }
 }

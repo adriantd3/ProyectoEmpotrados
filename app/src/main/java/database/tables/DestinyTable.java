@@ -1,5 +1,6 @@
 package database.tables;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
 public class DestinyTable implements InterfaceTable {
@@ -33,6 +34,14 @@ public class DestinyTable implements InterfaceTable {
 
     @Override
     public void addInitialData(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME_TRIP_ID, 1);
+        values.put(COLUMN_NAME_NAME, "London");
+        values.put(COLUMN_NAME_LAT, 51.5074);
+        values.put(COLUMN_NAME_LON, 0.1278);
+        values.put(COLUMN_NAME_ARRIVAL_DATE, "2024-12-29");
+        values.put(COLUMN_NAME_DEPARTURE_DATE, "2024-12-30");
 
+        db.insert(TABLE_NAME, null, values);
     }
 }
