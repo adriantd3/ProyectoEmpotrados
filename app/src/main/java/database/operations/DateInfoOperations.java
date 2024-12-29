@@ -76,6 +76,7 @@ public class DateInfoOperations {
         values.put(COLUMN_NAME_DATE, dateInfo.getDate().toString());
         values.put(COLUMN_NAME_TMP, dateInfo.getTmp());
         values.put(COLUMN_NAME_WEATHER_CODE, dateInfo.getWeatherCode());
+        values.put(COLUMN_NAME_DESTINY_ID, dateInfo.getDestinyId());
         return values;
     }
 }

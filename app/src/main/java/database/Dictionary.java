@@ -79,7 +79,6 @@ public class Dictionary {
 
     public void insertDestiny(NewDestinyDTO destiny, GeocodingResponse geocodingResponse, TomorrowResponse tomorrowResponse) {
         Integer destinyId = destinyOperations.insertDestiny(db, destiny, geocodingResponse);
-
         insertAllDateInfo(destinyId, tomorrowResponse);
         recalculateTripValues(destiny.getTripId());
     }
@@ -148,6 +147,7 @@ public class Dictionary {
         trip.setMinTmp(minTmp);
         trip.setMaxTmp(maxTmp);
         trip.setAvgTmp(avgTmp);
+        trip.setNDestinies(trip.getNDestinies() + 1);
 
         tripOperations.updateTrip(db, trip);
     }

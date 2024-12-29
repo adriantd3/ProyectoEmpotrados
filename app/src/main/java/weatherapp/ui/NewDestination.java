@@ -36,8 +36,6 @@ public class NewDestination extends AppCompatActivity {
     private TextView departureDatePicker;
     private Button btnSave;
     private Button btnCancel;
-    private ImageButton btnClearDestination;
-
     private LocalDate arrivalDate;
     private LocalDate departureDate;
     private DateTimeFormatter dateFormatter;
@@ -56,7 +54,6 @@ public class NewDestination extends AppCompatActivity {
         departureDatePicker = findViewById(R.id.departureDatePicker);
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
-        btnClearDestination = findViewById(R.id.btnClearDestination);
 
         dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
         arrivalDate = LocalDate.now();
@@ -68,8 +65,6 @@ public class NewDestination extends AppCompatActivity {
         dictionary = new Dictionary(this);
         nominatimService = new NominatimService();
         tomorrowioService = new TomorrowioService();
-
-        btnClearDestination.setOnClickListener(v -> editTextDestination.setText(""));
 
         arrivalDatePicker.setOnClickListener(v -> showDatePickerDialog(arrivalDatePicker));
         departureDatePicker.setOnClickListener(v -> showDatePickerDialog(departureDatePicker));
@@ -90,7 +85,7 @@ public class NewDestination extends AppCompatActivity {
                             newDestiny.setName(destination);
                             newDestiny.setArrivalDate(arrivalDate);
                             newDestiny.setDepartureDate(departureDate);
-                            newDestiny.setTripId(1);
+                            newDestiny.setTripId(9);
 
                             String formattedStartDate = arrivalDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                             String formattedEndDate = departureDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -102,7 +97,9 @@ public class NewDestination extends AppCompatActivity {
                                 public void onResponse(Call<TomorrowResponse> call, Response<TomorrowResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {
                                         TomorrowResponse tomorrowResponse = response.body();
-                                        Toast.makeText(NewDestination.this, "Weather data fetched successfully.", Toast.LENGTH_SHORT).show();
+                                        dictionary.insertDestiny(newDestiny, geocodingResponse, tomorrowResponse);
+                                        Toast.makeText(NewDestination.this, "New destination added successfully!!", Toast.LENGTH_SHORT).show();
+                                        finish();
                                     } else {
                                         try {
                                             String errorBody = response.errorBody().string();
@@ -110,7 +107,7 @@ public class NewDestination extends AppCompatActivity {
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
-                                        Toast.makeText(NewDestination.this, "" + response.code(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(NewDestination.this, "Incorrect dates", Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
