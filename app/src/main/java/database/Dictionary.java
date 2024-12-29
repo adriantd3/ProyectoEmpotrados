@@ -154,7 +154,7 @@ public class Dictionary {
     private HashMap<LocalDate, List<ValueObject>> mapIntervalsByDate(TomorrowResponse tomorrowResponse) {
         HashMap<LocalDate, List<ValueObject>> sortedIntervals = new HashMap<>();
         for (IntervalObject interval : tomorrowResponse.getData().getTimelines().get(0).getIntervals()) {
-            LocalDate date = interval.getStartTime();
+            LocalDate date = LocalDate.parse(interval.getStartTime());
             sortedIntervals.computeIfAbsent(date, k -> new ArrayList<>()).add(interval.getValues());
         }
         return sortedIntervals;

@@ -1,6 +1,9 @@
 package api.tomorrowio;
 
 import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 
 import api.nominatim.GeocodingResponse;
 import api.tomorrowio.response.TomorrowResponse;
@@ -22,12 +25,17 @@ public class TomorrowioService {
         api = retrofit.create(TomorrowioAPI.class);
     }
 
-    public void getWeatherData(GeocodingResponse geocodingResponse, Date startTime, Date endTime, Callback<TomorrowResponse> callback) {
-        String location = geocodingResponse.getLat() + ", " + geocodingResponse.getLon();
+    public void getWeatherData(GeocodingResponse geocodingResponse, LocalDate startTime, LocalDate endTime, Callback<TomorrowResponse> callback) {
+        String location = geocodingResponse.getLat() + "," + geocodingResponse.getLon();
         String[] fields = {"temperature", "weatherCode"};
         String[] timesteps = {"1h"};
 
-        Call<TomorrowResponse> call = api.getWeatherData(location, fields, timesteps, startTime, endTime);
+        Instant startTimeInstant = startTime.atStartOfDay(ZoneOffset.UTC).toInstant();
+        Instant endTimeInstant = endTime.atTime(23, 59, 59).atZone(ZoneOffset.UTC).toInstant();
+
+        TimelinesBody body = new TimelinesBody(location, fields, timesteps, startTimeInstant.toString(), endTimeInstant.toString());
+        System.out.println(body);
+        Call<TomorrowResponse> call = api.getWeatherData(body);
         call.enqueue(callback);
     }
 }

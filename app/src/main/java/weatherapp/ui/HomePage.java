@@ -29,14 +29,14 @@ public class HomePage extends AppCompatActivity {
             case R.id.newTripButton:
                 redirectToNewTrip();
                 break;
-            case R.id.newDestinationButton:
+            case R.id.newDestinyButton:
                 redirectToNewDestination();
                 break;
         }
     }
 
     private void redirectToNewTrip() {
-        Intent it = new Intent(this, TripPage.class);
+        Intent it = new Intent(this, NewTrip.class);
         startActivity(it);
     }
 

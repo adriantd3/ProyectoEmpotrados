@@ -94,15 +94,15 @@ public class NewDestination extends AppCompatActivity {
 
                             String formattedStartDate = arrivalDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                             String formattedEndDate = departureDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                            LocalDate startTime = LocalDate.parse(formattedStartDate);
+                            LocalDate endTime = LocalDate.parse(formattedEndDate);
 
-                            Date startTime = Date.valueOf(formattedStartDate);
-                            Date endTime = Date.valueOf(formattedEndDate);
-
-                            tomorrowioService.getWeatherData(geocodingResponse, startTime, endTime, new Callback<TomorrowResponse>() {
+                            tomorrowioService.getWeatherData(geocodingResponse, startTime, endTime, new Callback<>() {
                                 @Override
                                 public void onResponse(Call<TomorrowResponse> call, Response<TomorrowResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {
                                         TomorrowResponse tomorrowResponse = response.body();
+                                        Toast.makeText(NewDestination.this, "Weather data fetched successfully.", Toast.LENGTH_SHORT).show();
                                     } else {
                                         try {
                                             String errorBody = response.errorBody().string();
@@ -110,13 +110,14 @@ public class NewDestination extends AppCompatActivity {
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
-                                        Toast.makeText(NewDestination.this, "Error fetching weather data: " + response.code(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(NewDestination.this, "" + response.code(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<TomorrowResponse> call, Throwable t) {
                                     Toast.makeText(NewDestination.this, "Error fetching weather data: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.e("API Error", t.getMessage());
                                 }
                             });
                         } else {

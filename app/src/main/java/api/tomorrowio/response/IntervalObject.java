@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class IntervalObject {
-    private LocalDate startTime;
+    private String startTime;
     private ValueObject values;
 }

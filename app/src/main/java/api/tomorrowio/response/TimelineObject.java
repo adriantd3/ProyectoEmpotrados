@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class TimelineObject {
     private String timestep;
-    private LocalDate endTime;
-    private LocalDate startTime;
+    private String endTime;
+    private String startTime;
     private List<IntervalObject> intervals;
 }
