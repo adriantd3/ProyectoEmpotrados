@@ -33,7 +33,7 @@
             android:id="@+id/editTextDestination"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Destination"
+            android:hint="@string/destination_placeholder"
             android:padding="12dp"
             android:inputType="text"
             android:background="@drawable/black_border_shape" />
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Clear Destination"
+            android:contentDescription="@string/clear"
             android:layout_marginTop="8dp" />
     </LinearLayout>
 
@@ -71,7 +71,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Arrival Date"
+                android:text="@string/arrival_date_label"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="14sp" />
 
@@ -98,7 +98,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Departure Date"
+                android:text="@string/departure_date_label"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="14sp" />
 

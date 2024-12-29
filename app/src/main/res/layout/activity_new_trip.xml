@@ -15,30 +15,48 @@
       android:layout_height="match_parent"
       app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <!-- TextInput for trip name -->
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/trip_name_input_layout"
-        android:layout_width="350dp"
+    <LinearLayout
+        android:id="@+id/layoutTrip"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/trip_name"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="start"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.17000002">
+        app:layout_constraintTop_toTopOf="parent">
 
-      <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/trip_name_input"
+      <!-- Destination Label (Top) -->
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="8dp"
+          android:text="@string/trip_name"
+          android:textColor="@android:color/darker_gray"
+          android:textSize="16sp" />
+
+      <!-- Destination Input Field -->
+      <EditText
+          android:id="@+id/editTextTrip"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:background="@drawable/black_border_shape"
           android:hint="@string/enter_trip_name"
-          android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+          android:inputType="text"
+          android:padding="12dp" />
 
-    <!-- Cancel Button -->
-
-    <!-- Save Button -->
+      <!-- Clear Button -->
+      <ImageButton
+          android:id="@+id/btnClearTrip"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:background="?attr/selectableItemBackgroundBorderless"
+          android:contentDescription="@string/clear" />
+    </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancel_button"
@@ -48,6 +66,7 @@
         android:layout_marginBottom="24dp"
         android:onClick="onClick"
         android:text="@string/cancel"
+        android:backgroundTint="@android:color/darker_gray"
         app:iconGravity="start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

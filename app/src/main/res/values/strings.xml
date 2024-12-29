@@ -21,6 +21,7 @@
     <!-- Strings for general uses -->
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="clear">Clear</string>
 
     <!-- Strings used for fragments for HomePage -->
     <string name="home_page_header">My planned trips</string>
@@ -31,6 +32,7 @@
     <string name="trip_name">Trip name</string>
     <string name="enter_trip_name">Enter trip name</string>
     <string name="trip_name_error">Trip name is required</string>
+    <string name="trip_added">Trip added successfully</string>
 
 
     <!-- Strings used for fragments for NewDestination -->
@@ -42,7 +44,7 @@
     <string name="arrival_date_label">Arrival date</string>
     <string name="departure_date_label">Departure date</string>
     <string name="date_error">Invalid date</string>
-
+    <string name="error">Error</string>
 
 
 </resources>
