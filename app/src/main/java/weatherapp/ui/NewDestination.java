@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import api.tomorrowio.TomorrowioService;
 import api.tomorrowio.response.TomorrowResponse;
+import database.entities.TripEntity;
 import ssedm.lcc.example.newdictionarywithddbb.R;
 
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class NewDestination extends AppCompatActivity {
     private Dictionary dictionary;
     private NominatimService nominatimService;
     private TomorrowioService tomorrowioService;
+    private static Integer tripId = 9;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,10 @@ public class NewDestination extends AppCompatActivity {
         nominatimService = new NominatimService();
         tomorrowioService = new TomorrowioService();
 
+        TripEntity actualTrip = dictionary.getTripById(tripId);
+        setTitle(actualTrip.getName() + " - New Destination");
+
+
         arrivalDatePicker.setOnClickListener(v -> showDatePickerDialog(arrivalDatePicker));
         departureDatePicker.setOnClickListener(v -> showDatePickerDialog(departureDatePicker));
 
@@ -85,7 +91,7 @@ public class NewDestination extends AppCompatActivity {
                             newDestiny.setName(destination);
                             newDestiny.setArrivalDate(arrivalDate);
                             newDestiny.setDepartureDate(departureDate);
-                            newDestiny.setTripId(9);
+                            newDestiny.setTripId(tripId);
 
                             String formattedStartDate = arrivalDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                             String formattedEndDate = departureDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
