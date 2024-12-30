@@ -1,10 +1,6 @@
-package ssedm.lcc.example.newdictionarywithddbb;
+package weatherapp;
 
 import java.util.HashMap;
-
-/**
- * Created by ruben on 24/11/17.
- */
 
 public class SingletonMap extends HashMap<String, Object> {
 

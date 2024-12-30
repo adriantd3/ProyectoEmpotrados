@@ -13,9 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import database.Dictionary;
 import database.entities.TripEntity;
-import ssedm.lcc.example.newdictionarywithddbb.MainActivity;
 import ssedm.lcc.example.newdictionarywithddbb.R;
-import ssedm.lcc.example.newdictionarywithddbb.SingletonMap;
+import weatherapp.SingletonMap;
 
 public class EditTrip extends AppCompatActivity {
 
@@ -103,7 +102,7 @@ public class EditTrip extends AppCompatActivity {
 
 
     private void initDictionary() {
-        dict = (Dictionary) SingletonMap.getInstance().get(MainActivity.SHARED_AGENDA);
+        dict = (Dictionary) SingletonMap.getInstance().get(HomePage.SHARED_AGENDA);
         if (dict == null) {
             dict = new Dictionary(getApplicationContext());
             SingletonMap.getInstance().put(HomePage.SHARED_AGENDA, dict);

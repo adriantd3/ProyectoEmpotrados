@@ -16,9 +16,8 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import database.Dictionary;
 import database.dto.NewTripDTO;
-import ssedm.lcc.example.newdictionarywithddbb.MainActivity;
 import ssedm.lcc.example.newdictionarywithddbb.R;
-import ssedm.lcc.example.newdictionarywithddbb.SingletonMap;
+import weatherapp.SingletonMap;
 
 public class NewTrip extends AppCompatActivity {
 
@@ -88,7 +87,7 @@ public class NewTrip extends AppCompatActivity {
     }
 
     private void initDictionary() {
-        dict = (Dictionary) SingletonMap.getInstance().get(MainActivity.SHARED_AGENDA);
+        dict = (Dictionary) SingletonMap.getInstance().get(HomePage.SHARED_AGENDA);
         if(dict == null) {
             dict = new Dictionary(getApplicationContext());
             SingletonMap.getInstance().put(HomePage.SHARED_AGENDA, dict);

@@ -41,16 +41,6 @@
             android:name="weatherapp.ui.NewTrip"
             android:exported="false"
             android:label="@string/new_trip_activity_name" />
-        <activity
-            android:name=".AddContactActivity"
-            android:exported="true" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
     </application>
 
 </manifest>
