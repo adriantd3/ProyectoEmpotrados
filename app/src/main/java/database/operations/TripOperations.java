@@ -75,6 +75,9 @@ public class TripOperations {
         TripEntity entity = new TripEntity();
         entity.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_ID)));
         entity.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_NAME)));
+        entity.setAvgTmp(cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_NAME_AVG_TMP)));
+        entity.setMaxTmp(cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_NAME_MAX_TMP)));
+        entity.setMinTmp(cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_NAME_MIN_TMP)));
 
         String initDateString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_INIT_DATE));
         String endDateString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_END_DATE));
