@@ -15,7 +15,7 @@ import java.util.List;
 
 import database.entities.DestinyEntity;
 import database.entities.TripEntity;
-import ssedm.lcc.example.newdictionarywithddbb.R;
+import com.weatherapp.R;
 import weatherapp.ui.EditDestination;
 import weatherapp.ui.TripPage;
 

@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import api.tomorrowio.TomorrowioService;
 import api.tomorrowio.response.TomorrowResponse;
 import database.entities.TripEntity;
-import ssedm.lcc.example.newdictionarywithddbb.R;
+import com.weatherapp.R;
 
 import java.io.IOException;
 import java.time.LocalDate;

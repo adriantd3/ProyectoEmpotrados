@@ -16,7 +16,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import database.Dictionary;
 import database.dto.NewTripDTO;
-import ssedm.lcc.example.newdictionarywithddbb.R;
+import com.weatherapp.R;
 import weatherapp.SingletonMap;
 
 public class NewTrip extends AppCompatActivity {

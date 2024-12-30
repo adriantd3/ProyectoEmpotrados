@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'ssedm.lcc.example.newdictionarywithddbb'
+    namespace 'com.weatherapp'
     compileSdk 34
 
     defaultConfig {
-        applicationId "ssedm.lcc.example.newdictionarywithddbb"
+        applicationId 'com.weatherapp'
         minSdk 26
         targetSdk 34
         versionCode 1

@@ -11,10 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.weatherapp.R;
+
 import java.util.List;
 
 import database.entities.DateInfoEntity;
-import ssedm.lcc.example.newdictionarywithddbb.R;
 
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder>{
 

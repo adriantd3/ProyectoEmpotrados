@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import ssedm.lcc.example.newdictionarywithddbb.R;
+import com.weatherapp.R;
 
 import java.util.List;
 

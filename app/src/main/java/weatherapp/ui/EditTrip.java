@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import database.Dictionary;
 import database.entities.TripEntity;
-import ssedm.lcc.example.newdictionarywithddbb.R;
+import com.weatherapp.R;
 import weatherapp.SingletonMap;
 
 public class EditTrip extends AppCompatActivity {
