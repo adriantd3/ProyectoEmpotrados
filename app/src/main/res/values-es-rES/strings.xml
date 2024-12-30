@@ -27,6 +27,7 @@
 
     <!-- Strings used for fragments for EditTrip -->
     <string name="trip_updated">Viaje actualizado exitosamente</string>
+    <string name="edit_trip">Editar Viaje</string>
 
     <!-- Strings used for fragments for NewDestination -->
     <string name="new_destination_activity_name">Crear un nuevo destino</string>
