@@ -76,9 +76,7 @@ public class HomePage extends AppCompatActivity {
             case R.id.newTripButton:
                 redirectToNewTrip();
                 break;
-            case R.id.newDestinyButton:
-                redirectToNewDestination();
-                break;
+
         }
     }
 
