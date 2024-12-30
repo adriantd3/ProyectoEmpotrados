@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import database.Dictionary;
@@ -37,20 +38,38 @@ public class TripPage extends AppCompatActivity {
         tripName = getIntent().getStringExtra("name");
         if(tripName!=null) setTitle(tripName);
 
-        tripId = getIntent().getIntExtra("id", 0);
+        this.tripId = getIntent().getIntExtra("id", 0);
 
-        dict = new Dictionary(this);
 
         recyclerView = findViewById(R.id.destinationList);
 
         // Configurar LayoutManager
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<DestinyEntity> destinationList = dict.getAllByTripId(tripId);
+        dict = new Dictionary(this);
+
 
         // Configurar el adaptador
-        destinationAdapter = new DestinationAdapter(destinationList, this);
+        destinationAdapter = new DestinationAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(destinationAdapter);
+
+        loadData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData();
+    }
+
+
+    private void loadData() {
+        List<DestinyEntity> destinationList = dict.getAllByTripId(this.tripId);
+
+        // Configurar el adaptador
+        destinationAdapter.setDestinationList(destinationList);
+        destinationAdapter.notifyDataSetChanged();
+
     }
 
     public void onClick(View view) {

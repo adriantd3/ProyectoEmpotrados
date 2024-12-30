@@ -30,6 +30,10 @@ public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.
         this.context = context;
     }
 
+    public void setDestinationList(List<DestinyEntity> destinationList) {
+        this.destinationList=destinationList;
+    }
+
     // ViewHolder para manejar las vistas de cada item
     public static class DestinationViewHolder extends RecyclerView.ViewHolder {
         TextView tvDestinationName;

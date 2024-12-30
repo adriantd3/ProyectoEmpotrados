@@ -44,21 +44,31 @@ public class HomePage extends AppCompatActivity {
 
         dict = new Dictionary(this);
 
-        List<TripEntity> tripList = dict.getAllTrips();
-
-        // Configurar el adaptador
-        tripAdapter = new TripAdapter(tripList, this);
+        tripAdapter = new TripAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(tripAdapter);
 
 
+        loadData();
 
         initNewTripLauncher();
+
 
         //initDictionary();
     }
 
-    private void loadTripList() {
-        // Cargar la lista de viajes
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData();
+    }
+
+    private void loadData() {
+        List<TripEntity> tripList = dict.getAllTrips();
+
+        // Configurar el adaptador
+        tripAdapter.setTripList(tripList);
+        tripAdapter.notifyDataSetChanged();
+
     }
 
     public void onClick(View view) {

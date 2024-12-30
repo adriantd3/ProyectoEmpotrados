@@ -27,6 +27,10 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         this.context = context;
     }
 
+    public void setTripList(List<TripEntity> tripList) {
+        this.tripList = tripList;
+    }
+
     // ViewHolder para manejar las vistas de cada item
     public static class TripViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvDates, tvDestinies, tvMinTemp, tvAvgTemp, tvMaxTemp;
