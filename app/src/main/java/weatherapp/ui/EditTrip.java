@@ -34,7 +34,7 @@ public class EditTrip extends AppCompatActivity {
         Intent intent = getIntent();
         tripId = intent.getIntExtra("id", 0);
         trip = dict.getTripById(tripId);
-        setTitle("Edit Trip - " + trip.getName());
+        setTitle(getString(R.string.edit_trip)+ " - " + trip.getName());
         String currentName = trip.getName();
 
         if (currentName != null) {
