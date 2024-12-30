@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NewDictionaryWithDDBB"
+        android:theme="@style/Theme.TravelWeather"
         tools:targetApi="34">
         <activity
             android:name="weatherapp.ui.EditTrip"
@@ -21,8 +21,10 @@
             android:name="weatherapp.ui.EditDestination"
             android:exported="false" />
         <activity
+            android:label="TravelWeather"
             android:name="weatherapp.ui.HomePage"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
