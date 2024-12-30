@@ -131,6 +131,7 @@ public class Dictionary {
         LocalDate minDate = LocalDate.MAX, maxDate = LocalDate.MIN;
         float maxTmp = -1000, minTmp = 1000,  sumTmp = 0;
         int count = 0;
+
         for (DestinyEntity destinyEntity : destinyEntities) {
             for (DateInfoEntity dateInfoEntity : destinyEntity.getDateInfo()){
                 if (dateInfoEntity.getDate().isBefore(minDate)) {
@@ -151,11 +152,19 @@ public class Dictionary {
         }
         float avgTmp = sumTmp / count;
 
-        trip.setInitDate(minDate);
-        trip.setEndDate(maxDate);
-        trip.setMinTmp(minTmp);
-        trip.setMaxTmp(maxTmp);
-        trip.setAvgTmp(avgTmp);
+        if (destinyEntities.isEmpty()){
+            trip.setInitDate(null);
+            trip.setEndDate(null);
+            trip.setMinTmp(0.0f);
+            trip.setMaxTmp(0.0f);
+            trip.setAvgTmp(0.0f);
+        }else {
+            trip.setInitDate(minDate);
+            trip.setEndDate(maxDate);
+            trip.setMinTmp(minTmp);
+            trip.setMaxTmp(maxTmp);
+            trip.setAvgTmp(avgTmp);
+        }
         trip.setNDestinies(destinyEntities.size());
 
         tripOperations.updateTrip(db, trip);
