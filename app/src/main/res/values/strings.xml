@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Weather App</string>
+    <string name="app_name">TravelWeather</string>
     <string name="ok">Ok</string>
 
     <!-- Strings used for fragments for navigation -->
