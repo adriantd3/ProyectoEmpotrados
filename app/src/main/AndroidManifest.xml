@@ -29,7 +29,7 @@
         <activity
             android:name="weatherapp.ui.TripPage"
             android:exported="false"
-            android:label="Trip_Name" />
+            android:label="Trip" />
         <activity
             android:name="weatherapp.ui.NewDestination"
             android:exported="false"

@@ -44,4 +44,14 @@
     <string name="arrival_date_label">Fecha de llegada</string>
     <string name="departure_date_label">Fecha de salida</string>
     <string name="date_error">Fecha inválida</string>
+
+    <!-- Strings used for fragments for TripPage -->
+    <string name="edit">Editar</string>
+    <string name="delete">Borrar</string>
+
+    <!-- Strings used for fragments for TripItem -->
+    <plurals name="number_of_destinations">
+        <item quantity="one">%d destino</item>
+        <item quantity="other">%d destinos</item>
+    </plurals>
 </resources>

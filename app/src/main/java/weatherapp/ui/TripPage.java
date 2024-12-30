@@ -5,23 +5,52 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 import database.Dictionary;
+import database.entities.DestinyEntity;
+import database.entities.TripEntity;
 import ssedm.lcc.example.newdictionarywithddbb.MainActivity;
 import ssedm.lcc.example.newdictionarywithddbb.R;
 import ssedm.lcc.example.newdictionarywithddbb.SingletonMap;
+import weatherapp.adapter.DestinationAdapter;
+import weatherapp.adapter.TripAdapter;
 
 public class TripPage extends AppCompatActivity {
     public static final String SHARED_AGENDA = "SHARED_AGENDA";
 
     private Dictionary dict;
+    private String tripName;
+    private int tripId;
+
+    private RecyclerView recyclerView;
+    private DestinationAdapter destinationAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_page);
 
-        initDictionary();
+        tripName = getIntent().getStringExtra("name");
+        if(tripName!=null) setTitle(tripName);
+
+        tripId = getIntent().getIntExtra("id", 0);
+
+        dict = new Dictionary(this);
+
+        recyclerView = findViewById(R.id.destinationList);
+
+        // Configurar LayoutManager
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        List<DestinyEntity> destinationList = dict.getAllByTripId(tripId);
+
+        // Configurar el adaptador
+        destinationAdapter = new DestinationAdapter(destinationList, this);
+        recyclerView.setAdapter(destinationAdapter);
     }
 
     public void onClick(View view) {

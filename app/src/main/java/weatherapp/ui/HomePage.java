@@ -9,15 +9,26 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import database.Dictionary;
+import database.entities.TripEntity;
 import ssedm.lcc.example.newdictionarywithddbb.MainActivity;
 import ssedm.lcc.example.newdictionarywithddbb.R;
 import ssedm.lcc.example.newdictionarywithddbb.SingletonMap;
+import weatherapp.adapter.TripAdapter;
 
 public class HomePage extends AppCompatActivity {
     public static final String SHARED_AGENDA = "SHARED_AGENDA";
     private ActivityResultLauncher<Intent> launcher;
+
+    private RecyclerView recyclerView;
+    private TripAdapter tripAdapter;
 
     private Dictionary dict;
 
@@ -26,9 +37,24 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        recyclerView = findViewById(R.id.tripList);
+
+        // Configurar LayoutManager
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        dict = new Dictionary(this);
+
+        List<TripEntity> tripList = dict.getAllTrips();
+
+        // Configurar el adaptador
+        tripAdapter = new TripAdapter(tripList, this);
+        recyclerView.setAdapter(tripAdapter);
+
+
+
         initNewTripLauncher();
 
-        initDictionary();
+        //initDictionary();
     }
 
     private void loadTripList() {
@@ -52,8 +78,8 @@ public class HomePage extends AppCompatActivity {
 
     // Temporary redirect to NewDestination
     private void redirectToNewDestination() {
-        //launcher.launch(new Intent(this, NewDestination.class));
-        launcher.launch(new Intent(this, EditDestination.class));
+        launcher.launch(new Intent(this, NewDestination.class));
+        //launcher.launch(new Intent(this, EditDestination.class));
     }
 
     private void initDictionary() {

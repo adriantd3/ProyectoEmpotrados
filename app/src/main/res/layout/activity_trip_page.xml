@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="weatherapp.ui.HomePage">
+    tools:context="weatherapp.ui.TripPage">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newDestinationButton"
@@ -28,7 +28,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="8dp"
         android:onClick="onClick"
-        android:text="Edit"
+        android:text="@string/edit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,11 +39,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:onClick="onClick"
-        android:text="Delete"
+        android:text="@string/delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/destinationList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

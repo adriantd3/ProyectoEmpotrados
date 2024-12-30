@@ -46,5 +46,15 @@
     <string name="date_error">Invalid date</string>
     <string name="error">Error</string>
 
+    <!-- Strings used for fragments for TripPage -->
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+    <!-- Strings used for fragments for TripItem -->
+    <plurals name="number_of_destinations">
+        <item quantity="one">%d destination</item>
+        <item quantity="other">%d destinations</item>
+    </plurals>
+
 
 </resources>
