@@ -1,8 +1,11 @@
 package weatherapp.ui;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -42,7 +45,7 @@ public class NewDestination extends AppCompatActivity {
     private Dictionary dictionary;
     private NominatimService nominatimService;
     private TomorrowioService tomorrowioService;
-    private static Integer tripId = 9;
+    private Integer tripId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,11 @@ public class NewDestination extends AppCompatActivity {
         arrivalDate = LocalDate.now();
         departureDate = LocalDate.now();
 
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         arrivalDatePicker.setText(arrivalDate.format(dateFormatter));
         departureDatePicker.setText(departureDate.format(dateFormatter));
 
@@ -66,8 +74,13 @@ public class NewDestination extends AppCompatActivity {
         nominatimService = new NominatimService();
         tomorrowioService = new TomorrowioService();
 
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("id")) {
+            tripId = intent.getIntExtra("id", -1);
+        }
+
         TripEntity actualTrip = dictionary.getTripById(tripId);
-        setTitle(actualTrip.getName() + " - New Destination");
+        setTitle(actualTrip.getName() + " - " + getString(R.string.new_destination_header));
 
 
         arrivalDatePicker.setOnClickListener(v -> showDatePickerDialog(arrivalDatePicker));
@@ -102,7 +115,7 @@ public class NewDestination extends AppCompatActivity {
                                     if (response.isSuccessful() && response.body() != null) {
                                         TomorrowResponse tomorrowResponse = response.body();
                                         dictionary.insertDestiny(newDestiny, geocodingResponse, tomorrowResponse);
-                                        Toast.makeText(NewDestination.this, "New destination added successfully!!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(NewDestination.this, R.string.destination_create_success, Toast.LENGTH_SHORT).show();
                                         finish();
                                     } else {
                                         try {
@@ -111,7 +124,12 @@ public class NewDestination extends AppCompatActivity {
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
-                                        Toast.makeText(NewDestination.this, "Incorrect dates", Toast.LENGTH_SHORT).show();
+                                        new AlertDialog.Builder(NewDestination.this)
+                                                .setCancelable(false)
+                                                .setTitle(R.string.error)
+                                                .setMessage(R.string.incorrect_dates)
+                                                .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                                                .show();
                                     }
                                 }
 
@@ -121,19 +139,28 @@ public class NewDestination extends AppCompatActivity {
                                 }
                             });
                         } else {
-                            Toast.makeText(NewDestination.this, "Geocoding failed or no results found.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(NewDestination.this, R.string.geocoding_failed, Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<GeocodingResponse>> call, Throwable t) {
-                        Toast.makeText(NewDestination.this, "Error fetching geocoding data.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NewDestination.this, R.string.error_fetching_geocoding_data, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
 
         btnCancel.setOnClickListener(v -> finish());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void showDatePickerDialog(TextView targetTextView) {

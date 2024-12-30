@@ -2,7 +2,9 @@ package weatherapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +32,8 @@ public class TripPage extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DestinationAdapter destinationAdapter;
 
+    public static final int REQUEST_CODE_EDIT_TRIP = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,11 @@ public class TripPage extends AppCompatActivity {
         recyclerView.setAdapter(destinationAdapter);
 
         loadData();
+
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     @Override
@@ -87,19 +96,54 @@ public class TripPage extends AppCompatActivity {
     }
 
     private void redirectToEditTrip() {
-        //Intent it = new Intent(this, NewTrip.class);
-        //startActivity(it);
+        Intent intent = new Intent(this, EditTrip.class);
+        intent.putExtra("id", tripId);
+        startActivityForResult(intent, REQUEST_CODE_EDIT_TRIP);
+
     }
 
     private void redirectToDeleteTrip() {
-        //Intent it = new Intent(this, NewTrip.class);
-        //startActivity(it);
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle(R.string.delete_trip_title)
+                .setMessage(R.string.delete_trip_confirmation)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.delete, (dialog, which) -> {
+                    dict.deleteTrip(tripId);
+                    Toast.makeText(this, R.string.trip_deleted, Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show();
     }
 
-    // Temporary redirect to Newdestination
     private void redirectToNewdestination() {
         Intent it = new Intent(this, NewDestination.class);
+        it.putExtra("id", tripId);
         startActivity(it);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_EDIT_TRIP && resultCode == RESULT_OK) {
+            boolean updated = data.getBooleanExtra("updated", false);
+            if (updated) {
+                String updatedName = data.getStringExtra("newName");
+                setTitle(updatedName);
+            }
+        }
     }
 
     private void initDictionary() {

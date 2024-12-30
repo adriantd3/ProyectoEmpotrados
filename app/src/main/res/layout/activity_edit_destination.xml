@@ -37,8 +37,6 @@
             android:padding="12dp"
             android:inputType="text"
             android:background="@drawable/black_border_shape" />
-
-        <!-- Clear Button -->
     </LinearLayout>
 
     <!-- DatePickers Section -->
@@ -116,11 +114,12 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:weightSum="2"
+        android:weightSum="3"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp">
 
+        <!-- Cancel Button -->
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="0dp"
@@ -131,6 +130,19 @@
             android:text="@string/cancel"
             android:textColor="@android:color/white" />
 
+        <!-- Delete Button (in the middle) -->
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="@string/delete"
+            android:textColor="@android:color/white" />
+
+        <!-- Save Button -->
         <Button
             android:id="@+id/btnSave"
             android:layout_width="0dp"

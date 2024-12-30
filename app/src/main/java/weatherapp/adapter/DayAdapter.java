@@ -53,7 +53,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder>{
         DateInfoEntity day = dayList.get(position);
         holder.tvDate.setText(day.getDate().toString());
 
-        holder.tvTemp.setText(String.valueOf(day.getTmp()) + "ºC");
+        holder.tvTemp.setText(String.format("%.1fºC", day.getTmp()));
 
         int iconCode = day.getWeatherCode();
 

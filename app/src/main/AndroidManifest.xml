@@ -15,6 +15,9 @@
         android:theme="@style/Theme.NewDictionaryWithDDBB"
         tools:targetApi="34">
         <activity
+            android:name="weatherapp.ui.EditTrip"
+            android:exported="false" />
+        <activity
             android:name="weatherapp.ui.EditDestination"
             android:exported="false" />
         <activity

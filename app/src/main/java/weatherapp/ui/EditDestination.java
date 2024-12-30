@@ -1,8 +1,11 @@
 package weatherapp.ui;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,6 +37,7 @@ public class EditDestination extends AppCompatActivity {
     private TextView departureDatePicker;
     private Button btnSave;
     private Button btnCancel;
+    private Button btnDelete;
     private LocalDate arrivalDate;
     private LocalDate departureDate;
     private DateTimeFormatter dateFormatter;
@@ -41,7 +45,7 @@ public class EditDestination extends AppCompatActivity {
     private Dictionary dictionary;
     private NominatimService nominatimService;
     private TomorrowioService tomorrowioService;
-    private static Integer destinyId = 11;
+    private Integer destinyId;
     private DestinyEntity destiny;
 
     @Override
@@ -54,17 +58,28 @@ public class EditDestination extends AppCompatActivity {
         departureDatePicker = findViewById(R.id.departureDatePicker);
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
+        btnDelete = findViewById(R.id.btnDelete);
 
         dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
         arrivalDate = LocalDate.now();
         departureDate = LocalDate.now();
 
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         dictionary = new Dictionary(this);
         nominatimService = new NominatimService();
         tomorrowioService = new TomorrowioService();
 
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("id")) {
+            destinyId = intent.getIntExtra("id", -1);
+        }
+
         destiny = dictionary.getDestinyById(destinyId);
-        setTitle("Edit Destination - " + destiny.getName());
+        setTitle(getString(R.string.edit_destination_header) + " - " + destiny.getName());
         editTextDestination.setText(destiny.getName());
         arrivalDate = destiny.getArrivalDate();
         departureDate = destiny.getDepartureDate();
@@ -102,7 +117,7 @@ public class EditDestination extends AppCompatActivity {
                                     if (response.isSuccessful() && response.body() != null) {
                                         TomorrowResponse tomorrowResponse = response.body();
                                         dictionary.updateDestiny(destiny, geocodingResponse, tomorrowResponse);
-                                        Toast.makeText(EditDestination.this, "Destination updated successfully!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(EditDestination.this, R.string.destination_edit_success, Toast.LENGTH_SHORT).show();
                                         finish();
                                     } else {
                                         try {
@@ -111,7 +126,12 @@ public class EditDestination extends AppCompatActivity {
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
-                                        Toast.makeText(EditDestination.this, "Incorrect dates", Toast.LENGTH_SHORT).show();
+                                        new AlertDialog.Builder(EditDestination.this)
+                                                .setCancelable(false)
+                                                .setTitle(R.string.error)
+                                                .setMessage(R.string.incorrect_dates)
+                                                .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                                                .show();
                                     }
                                 }
 
@@ -121,19 +141,41 @@ public class EditDestination extends AppCompatActivity {
                                 }
                             });
                         } else {
-                            Toast.makeText(EditDestination.this, "Geocoding failed or no results found.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditDestination.this, R.string.geocoding_failed, Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<GeocodingResponse>> call, Throwable t) {
-                        Toast.makeText(EditDestination.this, "Error fetching geocoding data.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditDestination.this, R.string.error_fetching_geocoding_data, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
 
         btnCancel.setOnClickListener(v -> finish());
+
+        btnDelete.setOnClickListener(v -> {
+            new AlertDialog.Builder(EditDestination.this)
+                    .setTitle(R.string.confirm_delete)
+                    .setMessage(R.string.confirm_delete_message)
+                    .setPositiveButton(R.string.yes, (dialog, which) -> {
+                        dictionary.deleteDestiny(destinyId);
+                        Toast.makeText(EditDestination.this, R.string.destination_deleted, Toast.LENGTH_SHORT).show();
+                        finish();
+                    })
+                    .setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss())
+                    .show();
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void showDatePickerDialog(TextView targetTextView) {

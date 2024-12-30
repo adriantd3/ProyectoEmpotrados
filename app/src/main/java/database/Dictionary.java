@@ -62,10 +62,14 @@ public class Dictionary {
 
     public void updateTrip(TripEntity trip) {
         tripOperations.updateTrip(db, trip);
+        recalculateTripValues(trip.getId());
     }
 
     public void deleteTrip(Integer id) {
         tripOperations.deleteTrip(db, id);
+        for (DestinyEntity destiny : destinyOperations.getAllByTripId(db, id)){
+            deleteDestiny(destiny.getId());
+        }
     }
 
     // DestinyEntity methods
@@ -92,7 +96,11 @@ public class Dictionary {
     }
 
     public void deleteDestiny(Integer id) {
+        DestinyEntity destiny = destinyOperations.getDestinyById(db, id);
+        TripEntity trip = tripOperations.getTripById(db, destiny.getTripId());
+        deleteAllDestinyDateInfo(destiny);
         destinyOperations.deleteDestiny(db, id);
+        updateTrip(trip);
     }
 
     // DateInfoEntity methods

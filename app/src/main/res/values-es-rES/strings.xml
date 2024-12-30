@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">(Aplicacion Tiempo)</string>
+    <string name="app_name">Aplicacion del Tiempo</string>
     <string name="input">Introduce una palabra</string>
     <string name="word">Palabra</string>
     <string name="meaning">Significado</string>
@@ -35,19 +35,44 @@
     <string name="trip_name_error">El nombre del viaje es obligatorio</string>
     <string name="trip_added">Viaje creado correctamente</string>
 
+    <!-- Strings used for fragments for EditTrip -->
+    <string name="trip_updated">Viaje actualizado exitosamente</string>
+
     <!-- Strings used for fragments for NewDestination -->
     <string name="new_destination_activity_name">Crear un nuevo destino</string>
+    <string name="new_destination_header">Nuevo destino</string>
     <string name="destination_label">Destino</string>
     <string name="destination_placeholder">Introduce el destino</string>
     <string name="destination_error">El destino es obligatorio</string>
+    <string name="destination_create_success">Nuevo destino añadido exitosamente!!</string>
 
     <string name="arrival_date_label">Fecha de llegada</string>
     <string name="departure_date_label">Fecha de salida</string>
     <string name="date_error">Fecha inválida</string>
 
+    <string name="please_enter_destination">Por favor, ingresa un destino</string>
+    <string name="incorrect_dates">Fechas incorrectas, recuerde que solo se pueden introducir fechas hasta cinco días en adelante</string>
+    <string name="geocoding_failed">Geocodificación fallida o no se encontraron resultados</string>
+    <string name="error_fetching_geocoding_data">Error al obtener los datos de geocodificación</string>
+
+    <!-- Strings used for fragments for NewDestination -->
+    <string name="edit_destination_header">Editar destino</string>
+    <string name="destination_edit_success">Destino actualizado exitosamente!!</string>
+    <!-- Spanish strings -->
+    <string name="confirm_delete">Eliminar Destino</string>
+    <string name="confirm_delete_message">¿Estás seguro de que quieres eliminar este destino?</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="destination_deleted">Destino eliminado con éxito.</string>
+
+
     <!-- Strings used for fragments for TripPage -->
     <string name="edit">Editar</string>
     <string name="delete">Borrar</string>
+    <string name="delete_trip_title">Eliminar viaje</string>
+    <string name="delete_trip_confirmation">¿Estás seguro de que quieres eliminar este viaje? Esta acción no se puede deshacer</string>
+    <string name="trip_deleted">Viaje eliminado con éxito</string>
+
 
     <!-- Strings used for fragments for TripItem -->
     <plurals name="number_of_destinations">

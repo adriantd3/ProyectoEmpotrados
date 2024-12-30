@@ -11,31 +11,38 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
-
 import database.Dictionary;
-import database.dto.NewTripDTO;
+import database.entities.TripEntity;
 import ssedm.lcc.example.newdictionarywithddbb.MainActivity;
 import ssedm.lcc.example.newdictionarywithddbb.R;
 import ssedm.lcc.example.newdictionarywithddbb.SingletonMap;
 
-public class NewTrip extends AppCompatActivity {
+public class EditTrip extends AppCompatActivity {
 
-    //ADD DATABASE CONNECTION
-    Dictionary dict;
-
-    EditText tripName;
+    private Dictionary dict;
+    private EditText tripNameEditText;
+    private int tripId;
+    private TripEntity trip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_trip);
+        setContentView(R.layout.activity_edit_trip);
 
-        tripName = findViewById(R.id.editTextTrip);
+        tripNameEditText = findViewById(R.id.editTextTrip);
         initDictionary();
 
-        if(getSupportActionBar() != null) {
+        Intent intent = getIntent();
+        tripId = intent.getIntExtra("id", 0);
+        trip = dict.getTripById(tripId);
+        setTitle("Edit Trip - " + trip.getName());
+        String currentName = trip.getName();
+
+        if (currentName != null) {
+            tripNameEditText.setText(currentName);
+        }
+
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -44,7 +51,6 @@ public class NewTrip extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            // Finaliza la actividad actual y vuelve a la anterior
             finish();
             return true;
         }
@@ -53,14 +59,19 @@ public class NewTrip extends AppCompatActivity {
 
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.cancel_button: finish(); break;
-            case R.id.save_button: createTrip(); break;
+            case R.id.cancel_button:
+                finish();
+                break;
+            case R.id.save_button:
+                updateTripName();
+                break;
         }
     }
 
-    private void createTrip() {
-        String name = tripName.getText().toString();
-        if(name.isEmpty()) {
+    private void updateTripName() {
+        String newName = tripNameEditText.getText().toString().trim();
+
+        if (newName.isEmpty()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(false);
             builder.setTitle(R.string.error);
@@ -71,25 +82,29 @@ public class NewTrip extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
-
             builder.setMessage(R.string.trip_name_error);
             builder.show();
 
             return;
         }
-        dict.insertTrip(new NewTripDTO(name));
 
+        trip.setName(newName);
+        dict.updateTrip(trip);
 
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("created", true);
+        resultIntent.putExtra("updated", true);
+        resultIntent.putExtra("newName", newName);
         setResult(RESULT_OK, resultIntent);
+
+        Toast.makeText(this, R.string.trip_updated, Toast.LENGTH_SHORT).show();
 
         finish();
     }
 
+
     private void initDictionary() {
         dict = (Dictionary) SingletonMap.getInstance().get(MainActivity.SHARED_AGENDA);
-        if(dict == null) {
+        if (dict == null) {
             dict = new Dictionary(getApplicationContext());
             SingletonMap.getInstance().put(HomePage.SHARED_AGENDA, dict);
         }

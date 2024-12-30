@@ -111,13 +111,26 @@ public class TripOperations {
 
     private ContentValues mapEntityToContentValues(TripEntity trip) {
         ContentValues values = new ContentValues();
+
         values.put(COLUMN_NAME_NAME, trip.getName());
-        values.put(COLUMN_NAME_INIT_DATE, trip.getInitDate().toString());
-        values.put(COLUMN_NAME_END_DATE, trip.getEndDate().toString());
+
+        if (trip.getInitDate() != null) {
+            values.put(COLUMN_NAME_INIT_DATE, trip.getInitDate().toString());
+        } else {
+            values.put(COLUMN_NAME_INIT_DATE, (String) null);
+        }
+
+        if (trip.getEndDate() != null) {
+            values.put(COLUMN_NAME_END_DATE, trip.getEndDate().toString());
+        } else {
+            values.put(COLUMN_NAME_END_DATE, (String) null);
+        }
+
         values.put(COLUMN_NAME_NDESTINIES, trip.getNDestinies());
         values.put(COLUMN_NAME_MIN_TMP, trip.getMinTmp());
         values.put(COLUMN_NAME_AVG_TMP, trip.getAvgTmp());
         values.put(COLUMN_NAME_MAX_TMP, trip.getMaxTmp());
+
         return values;
     }
 

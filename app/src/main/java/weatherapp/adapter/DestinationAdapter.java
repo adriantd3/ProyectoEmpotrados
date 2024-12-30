@@ -16,6 +16,7 @@ import java.util.List;
 import database.entities.DestinyEntity;
 import database.entities.TripEntity;
 import ssedm.lcc.example.newdictionarywithddbb.R;
+import weatherapp.ui.EditDestination;
 import weatherapp.ui.TripPage;
 
 public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.DestinationViewHolder>{
@@ -68,22 +69,14 @@ public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.
         dayAdapter = new DayAdapter(destination.getDateInfo(), context);
         holder.daysRecyclerView.setAdapter(dayAdapter);
 
-        /*
-        if (destination.getInitDate()!=null && destination.getEndDate()!=null) holder.tvDates.setText(destination.getInitDate().toString() + " - " + trip.getEndDate().toString());
-        if (destination.getNDestinies()!=null) holder.tvDestinies.setText(destination.getNDestinies() + " destinies");
-        if (destination.getMinTmp()!=null) holder.tvMinTemp.setText(String.format("%.1fºC", destination.getMinTmp()));
-        if (destination.getAvgTmp()!=null) holder.tvAvgTemp.setText(String.format("%.1fºC", destination.getAvgTmp()));
-        if (destination.getMaxTmp()!=null) holder.tvMaxTemp.setText(String.format("%.1fºC", destination.getMaxTmp()));
-
         // Configurar click listener
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, TripPage.class);
-            intent.putExtra("id", trip.getId());
-            intent.putExtra("name", trip.getName());
+            Intent intent = new Intent(context, EditDestination.class);
+            intent.putExtra("id", destination.getId());
             context.startActivity(intent);
         });
-         */
+
     }
 
     @Override

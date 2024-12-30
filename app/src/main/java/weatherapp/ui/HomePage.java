@@ -84,12 +84,6 @@ public class HomePage extends AppCompatActivity {
         launcher.launch(new Intent(this, NewTrip.class));
     }
 
-    // Temporary redirect to NewDestination
-    private void redirectToNewDestination() {
-        launcher.launch(new Intent(this, NewDestination.class));
-        //launcher.launch(new Intent(this, EditDestination.class));
-    }
-
     private void initDictionary() {
         dict = (Dictionary) SingletonMap.getInstance().get(MainActivity.SHARED_AGENDA);
         if (dict == null) {
